@@ -83,3 +83,49 @@
   color: white;
   margin-left: 10px;
 }
+
+/* cards */
+
+.image-container {
+  width: 100%;
+  height: 180px;
+  margin-bottom: 1rem;
+}
+
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+
+.favorite {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  background-color: #757575;
+}
+.favorite input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.favorite input:checked ~ svg {
+  animation: bouncing 0.5s;
+  fill: #ffffff;
+  filter: drop-shadow(0px 3px 1px rgba(10, 10, 10, 0.14));
+}
+
+.favorite svg {
+  fill: #f80000;
+}

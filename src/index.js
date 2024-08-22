@@ -3,8 +3,8 @@ import morgan from "morgan";
 import { engine } from "express-handlebars";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import personasRoutes from "./routes/personas.routes.js";
-import tipoPersonaRoutes from "./routes/tipoPersona.routes.js";
+import ViajecitoRoutes from "./routes/viajecito.routes.js";
+
 
 
 //inicializacion
@@ -35,11 +35,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //routes
-app.get("/", (req, res) => {
-  res.render("index");
-});
-app.use(personasRoutes);
-app.use(tipoPersonaRoutes);
+
+app.use(ViajecitoRoutes);
+
 //public files
 app.use(express.static(join(__dirname, "public")));
 
