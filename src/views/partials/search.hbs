@@ -1,63 +1,79 @@
-<div class="container-search">
-  <div class="search">
-    <div>
-      <div class="search-one px-2">
-        <div class="mx-5">
-          <div for="" class="ml-2">Destino</div>
-          <input
-            class="input-search"
-            type="text"
-            placeholder="¿A donde quieres ir?"
-          />
+<div class="container mt-5 bg-primary">
+  <form id="sortForm" action="/hotel" method="get">
+    <div class="row mb-4">
+      <div class="col-md-3 mb-3">
+        <label for="destination" class="form-label">Destino</label>
+        <input
+          type="text"
+          class="form-control"
+          id="destination"
+          name="destination"
+          placeholder="Ingrese el destino"
+        />
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="arrival" class="form-label">Llegada</label>
+        <input type="date" class="form-control" id="arrival" name="arrival" />
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="departure" class="form-label">Salida</label>
+        <input
+          type="date"
+          class="form-control"
+          id="departure"
+          name="departure"
+        />
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Número de personas</label>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle w-100"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Seleccione
+          </button>
+          <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+            <li class="mb-2">
+              <label for="adults" class="form-label">Adultos</label>
+              <input
+                type="number"
+                class="form-control"
+                id="adults"
+                name="adults"
+                placeholder="Número de adultos"
+              />
+            </li>
+            <li class="mb-2">
+              <label for="children" class="form-label">Niños</label>
+              <input
+                type="number"
+                class="form-control"
+                id="children"
+                name="children"
+                placeholder="Número de niños"
+              />
+            </li>
+            <li>
+              <label for="rooms" class="form-label">Habitaciones</label>
+              <input
+                type="number"
+                class="form-control"
+                id="rooms"
+                name="rooms"
+                placeholder="Número de habitaciones"
+              />
+            </li>
+          </ul>
         </div>
       </div>
+      <div class="d-grid gap-2 col-md-2 mx-auto">
+        <button type="submit" class="btn btn-primary">Buscar</button>
 
-    </div>
-    <div>
-      <div class="search-one px-2">
-        <div class="mx-5">
-          <div for="" class="ml-2">Llegada</div>
-          <input
-            class="input-search"
-            type="date"
-            placeholder="Elija una fecha"
-          />
-        </div>
       </div>
-
     </div>
-    <div>
-      <div class="search-one px-2">
-        <div class="mx-5">
-          <div for="" class="ml-2">Salida</div>
-          <input
-            class="input-search"
-            type="date"
-            placeholder="Elija una fecha"
-          />
-        </div>
-      </div>
-
-    </div>
-    <div>
-      <div class="search-one px-2">
-        <div class="mx-5">
-          <div for="" class="ml-2">Huespedes / Personas</div>
-          <input
-            class="input-search"
-            type="number"
-            placeholder="Seleccione un numero"
-          />
-        </div>
-      </div>
-
-    </div>
-    <div>
-
-      <button class="search-button"><i
-          class="fa-solid fa-magnifying-glass mx-2"
-        ></i></button>
-    </div>
-
-  </div>
+  </form>
 </div>

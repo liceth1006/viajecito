@@ -2,13 +2,14 @@
   {{>carousel}}
   {{>search}}
   <div class="container-fluid mt-5 ">
-    <h2>Descubre nuestros alojamientos destacados</h2>
+    <h2>Descubre Colombia</h2>
+    <p>Estos destinos populares tienen mucho que ofrecer</p>
     <div class="row row-cols-1 row-cols-md-3 g-4">
      
       {{#if items}}
         {{#each items}}
          <div class="col">
-          {{> card}}
+          {{> cardSearchDestination}}
           </div>
         {{/each}}
       {{else}}
