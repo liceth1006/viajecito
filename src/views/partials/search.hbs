@@ -1,7 +1,7 @@
-<div class="container mt-5 bg-primary">
-  <form id="sortForm" action="/hotel" method="get">
-    <div class="row mb-4">
-      <div class="col-md-3 mb-3">
+<div class="container  search">
+  <form id="Form" action="/hotel"  method="get">
+    <div class="row py-2">
+      <div class="col-md-3 ">
         <label for="destination" class="form-label">Destino</label>
         <input
           type="text"
@@ -11,11 +11,11 @@
           placeholder="Ingrese el destino"
         />
       </div>
-      <div class="col-md-2 mb-3">
+      <div class="col-md-2 ">
         <label for="arrival" class="form-label">Llegada</label>
         <input type="date" class="form-control" id="arrival" name="arrival" />
       </div>
-      <div class="col-md-2 mb-3">
+      <div class="col-md-2 ">
         <label for="departure" class="form-label">Salida</label>
         <input
           type="date"
@@ -24,11 +24,11 @@
           name="departure"
         />
       </div>
-      <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-sm-5 mb-md-0 ">
         <label class="form-label">Número de personas</label>
         <div class="dropdown">
           <button
-            class="btn btn-secondary dropdown-toggle w-100"
+            class="btn  dropdown-toggle w-100"
             type="button"
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"
@@ -70,10 +70,13 @@
           </ul>
         </div>
       </div>
-      <div class="d-grid gap-2 col-md-2 mx-auto">
-        <button type="submit" class="btn btn-primary">Buscar</button>
+     <div class="d-grid col-6 col-md-2">
+    <button type="submit" class="button">
+      <span> <i class="fa-solid fa-magnifying-glass mx-2"></i>Buscar</span>
+      
+     </button>
+</div>
 
-      </div>
     </div>
   </form>
 </div>
