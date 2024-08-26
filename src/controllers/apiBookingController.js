@@ -3,7 +3,7 @@ import axios, { Axios } from "axios";
 const options = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": "3211edd23cmsh487d539589a2ce0p13146fjsn24af5d630ce6",
+    "x-rapidapi-key": "4b63e186f9msh973e823046a8fe3p110c93jsn5d4fcdb0c180",
     "x-rapidapi-host": "booking-com.p.rapidapi.com",
   },
 };

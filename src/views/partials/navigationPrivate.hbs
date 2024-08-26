@@ -1,0 +1,157 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a href="/" class="logo-link">
+      <img style="width: 15%;" src="../img/Logo.png" alt="logo" />
+      <span class="title">Viajecitos</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon text-black"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav" style="margin-left:auto;">
+        <li class="nav-item">
+          <a
+            class="nav-link text-black fs-xl"
+            style="display: flex; align-items: center; "
+            aria-current="page"
+            href="/add"
+          ><i class="fa-solid fa-pencil mx-2"></i> Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-black fs-xl"
+            style="display: flex; align-items: center; "
+            href="/hotel"
+          > <i class="fa-solid fa-hotel mx-2"></i>Alojamientos</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-black fs-xl"
+            style="display: flex; align-items: center; "
+            href="/list"
+          > <i class="fa-solid fa-heart mx-2"></i>Favoritos</a>
+        </li>
+      </ul>
+      <div class="d-flex justify-content-between">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            id="userInfoButton"
+          >
+            <span id="userName"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#profileModal"
+              >
+                <i class="fa-solid fa-circle-user mx-2"></i>Perfil
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#logoutModal"
+                id="logout"
+              >
+                <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
+                Salir
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Modal for Logout Confirmation -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Confirmar Cierre de Sesión</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas cerrar sesión?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmLogout">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Función para obtener los datos del usuario y actualizar el botón
+  async function updateUserInfo() {
+    try {
+      const response = await fetch('/profile', {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Añade el token si es necesario
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const userNameElement = document.getElementById('userName');
+        userNameElement.textContent = `${data.use_name} ${data.use_lastname}`;
+      } else {
+        console.error('Error al obtener la información del usuario:', data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  // Llama a la función para actualizar la información del usuario al cargar la página
+  document.addEventListener('DOMContentLoaded', updateUserInfo);
+
+  // Manejo del logout
+  document.getElementById('confirmLogout').addEventListener('click', async () => {
+    try {
+      const response = await fetch('/logout', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Salida exitosa");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/";
+      } else {
+        alert(data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+</script>

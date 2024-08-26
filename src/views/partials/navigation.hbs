@@ -39,20 +39,51 @@
             href="/list"
           > <i class="fa-solid fa-heart mx-2"></i>Favoritos</a>
         </li>
-        <li class="nav-item">
+      </ul>
+  <div class="d-flex justify-content-between">
+        <div class="btn-group">
           <button
             type="button"
-            class="nav-link text-black fs-xl"
-            style="display: flex; align-items: center; "
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
-           <i class="fa-solid fa-circle-user mx-2"></i>Inicia sesión
+            <span>
+              <i class="fa-solid fa-bars mx-2"></i><i
+                class="fa-solid fa-circle-user"
+              ></i>
+            </span>
           </button>
-        </li>
-      </ul>
-
+          <ul class="dropdown-menu">
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black "
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                <i class="fa-solid fa-circle-user mx-2"></i>Inicia sesión
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black "
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#staticBack"
+              >
+                <i class="fa-solid fa-user-pen mx-2"></i>
+                Regístrate
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+     
     </div>
+    
 
   </div>
 </nav>

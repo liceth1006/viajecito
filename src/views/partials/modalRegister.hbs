@@ -1,0 +1,97 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBack"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdrop1Label">Te damos la
+          bienvenida a ViajeCito</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm" action="/register" method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre Completo</label>
+            <input
+              type="text"
+              class="form-control"
+              id="use_name"
+              name="use_name"
+              placeholder="Ingresa tu nombre completo"
+              required
+            />
+          </div>
+           <div class="mb-3">
+            <label for="name" class="form-label">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="use_lastname"
+              name="use_lastname"
+              placeholder="Ingresa tu nombre completo"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="use_mail"
+              name="use_mail"
+              placeholder="nombre@ejemplo.com"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="use_password" class="form-label">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="use_password"
+              name="use_password"
+              placeholder="Crea una contraseña"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="use_birthdate" class="form-label">Fecha de nacimiento</label>
+            <input
+              type="date"
+              class="form-control"
+              id="use_birthdate"
+              name="use_birthdate"
+              placeholder="Crea una contraseña"
+              required
+            />
+          </div>
+          {{!-- <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Repite la contraseña"
+              required
+            /> --}}
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
