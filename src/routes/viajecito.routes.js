@@ -1,5 +1,5 @@
 import express from "express";
-import { getApiBooking,searchDestination,detailsApiBooking} from '../controllers/apiBookingController.js';
+import { getApiBooking,searchDestination,detailsApiBooking, getApiBookingFavorite} from '../controllers/apiBookingController.js';
 import {registerUser,login,logout,profile} from '../controllers/authController.js'
 import { requireToken } from "../middlewares/requireToken.js";
 import { getFavorite, postFavorite } from "../controllers/favoriteController.js";
@@ -38,7 +38,8 @@ router.get('/favoritePublic', (req, res) => {
 });
 
 router.get("/profile",requireToken, profile);
-router.get("/favoritePrivate",requireToken, getFavorite);
+router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
+
 router.post("/favoritePrivate",requireToken, postFavorite);
 router.get("/privatePage", getApiBooking);
 

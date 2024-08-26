@@ -131,6 +131,117 @@ function handleSortForm() {
   }
 }
 
+//funcion para guardar favorito
+async function postFavorite(hotelId) {
+  const token = localStorage.getItem('token');
+const img = document.getElementById(`img-${hotelId}`)
+  try {
+    const response = await fetch(`/postFavorite/${hotelId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (response.ok) {
+      console.log("Hotel ID:", hotelId);
+      console.log("Agregado a favoritos");
+       // Cambiar imagen para reflejar el estado de favorito
+        img.src = "../img/iconFavorito.png";
+    } else {
+      console.log('Error al agregar favorito');
+    }
+  } catch (error) {
+    console.error('Error al agregar favorito:', error);
+  }
+}
+
+
+// Función para obtener los favoritos
+async function getFavorite() {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No se encontró el token en el localStorage.');
+      return;
+    }
+
+    const response = await fetch('/favoritePrivate', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      const container = document.getElementById('hotelsContainer');
+      container.innerHTML = '';
+console.log(data)
+      // if (data.length > 0) {
+      //   data.forEach(hotel => {
+      //     const hotelCard = `
+      //       <div class="card h-100">
+      //         <div class="image-container">
+      //           <img src="${hotel.max_photo_url || ''}" class="card-img-top" alt="${hotel.hotel_name_trans || 'Hotel'}"/>
+      //         </div>
+      //         <div class="card-body">
+      //           <h4 class="card-title">${hotel.hotel_name_trans || 'Nombre del Hotel'}</h4>
+      //           <p class="text-md-end text-success">
+      //             <i class="fa-solid fa-ranking-star"></i>
+      //             ${hotel.review_score_word || 'Sin Calificación'} (${hotel.review_score || '0'})
+      //           </p>
+      //           <div class="row">
+      //             <div class="col-4">
+      //               <p><i class="fa-solid fa-tree-city text-success"></i> ${hotel.city || 'Ciudad'}</p>
+      //             </div>
+      //             <div class="col-8">
+      //               <p><i class="fa-solid fa-location-dot text-primary"></i> ${hotel.address || 'Dirección'}</p>
+      //             </div>
+      //           </div>
+      //           <h4>Precio por noche: ${hotel.composite_price_breakdown?.gross_amount_per_night?.amount_unrounded || 'N/A'}</h4>
+      //           <h4>Precio Total: ${hotel.composite_price_breakdown?.all_inclusive_amount?.amount_rounded || 'N/A'}</h4>
+      //           <p class="card-text mb-0">${hotel.ribbon_text || 'Texto del Rango'}</p>
+      //           <p class="card-text mb-0">Cancelación gratuita: ${hotel.is_free_cancellable ? '<span class="text-success mb-0">Sí</span>' : '<span class="text-danger mb-0">No</span>'}</p>
+      //           <p class="card-text mb-0">Pago por adelantado: ${hotel.cc_required ? '<span class="text-success">Requerido</span>' : '<span class="text-danger">No requerido</span>'}</p>
+      //           <p class="card-text mb-0">Check-in: desde ${hotel.checkin?.from || 'N/A'} hasta ${hotel.checkin?.until || 'N/A'}</p>
+      //           <p class="card-text mb-0">Check-out: desde ${hotel.checkout?.from || 'N/A'} hasta ${hotel.checkout?.until || 'N/A'}</p>
+      //           <div class="d-grid gap-2 col-6 mx-auto mt-2">
+      //             <a href="/hotelDetails/${hotel.hotel_id || ''}" class="button">
+      //               <span>Ver disponibilidad <i class="fa-solid fa-chevron-right"></i></span>
+      //             </a>
+      //           </div>
+      //           <div class="position-absolute top-0 end-0 p-3">
+      //             ${hotel.badges ? hotel.badges.map(badge => `<span class="badge bg-success mb-0">${badge.text}</span>`).join('') : ''}
+      //           </div>
+      //         </div>
+      //         <div id="${hotel.hotel_id}" class="favorite" onclick="postFavorite('${hotel.hotel_id}')">
+      //           <img id="img-${hotel.hotel_id}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+      //         </div>
+      //       </div>
+      //     `;
+      //     container.innerHTML += hotelCard;
+      //   });
+      // } else {
+      //   container.innerHTML = '<p>No hay favoritos para mostrar.</p>';
+      // }
+    } else {
+      console.error('Error al obtener la información del usuario:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("enviooo");
 
@@ -142,6 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Llama a la función para actualizar la información del usuario
   updateUserInfo();
+  getFavorite()
 
   // Evento para el botón de logout
   const logoutButton = document.getElementById("confirmLogout");

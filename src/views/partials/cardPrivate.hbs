@@ -54,34 +54,8 @@
   </div>
 
   <!-- Botón de favorito -->
-  <button id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}')">
+  <div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}')">
     <img   id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
-  </button>
+  </div>
 </div>
 
-<script>
-async function postFavorite(hotelId) {
-  const token = localStorage.getItem('token');
-const img = document.getElementById(`img-${hotelId}`)
-  try {
-    const response = await fetch(`/postFavorite/${hotelId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-
-    if (response.ok) {
-      console.log("Hotel ID:", hotelId);
-      console.log("Agregado a favoritos");
-       // Cambiar imagen para reflejar el estado de favorito
-        img.src = "../img/iconFavorito.png";
-    } else {
-      console.log('Error al agregar favorito');
-    }
-  } catch (error) {
-    console.error('Error al agregar favorito:', error);
-  }
-}
-</script>

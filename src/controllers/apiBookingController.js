@@ -136,3 +136,59 @@ export const detailsApiBooking = async (req, res) => {
     res.status(500).send("An error occurred");
   }
 };
+
+
+// Controller para obtener hoteles favoritos
+export const getApiBookingFavorite = async (req, res) => {
+  const {
+    orderBy,
+    checkin_date,
+    checkout_date,
+    room_number,
+    children_number,
+    adults_number,
+  } = req.query;
+  const userId = req.use_id
+  const order_By = orderBy || "popularity";
+  const children = children_number || "2";
+  const adult = adults_number || "2";
+  const room = room_number || "1";
+
+  // Obtener la fecha de hoy y formatearla como 'YYYY-MM-DD'
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+
+  // Crear la fecha de checkout sumando un día a checkin_date
+  const checkinDateObj = new Date(formattedDate);
+  checkinDateObj.setDate(checkinDateObj.getDate() + 1);
+  const formattedCheckoutDate =
+    checkout_date || checkinDateObj.toISOString().split("T")[0];
+
+  const checkin = checkin_date || formattedDate;
+  const checkout = checkout_date || formattedCheckoutDate;
+  const dest_type = "country"; // Ajustado para un tipo fijo; puede ser dinámico si es necesario
+  const dest_id = "47";
+
+  const URL_SEARCH_HOTEL = `https://booking-com.p.rapidapi.com/v1/hotels/search?&adults_number=${adult}&children_number=${children}&room_number=${room}&include_adjacency=true&units=metric&checkout_date=${checkout}&dest_id=${dest_id}&filter_by_currency=COP&dest_type=${dest_type}&checkin_date=${checkin}&order_by=${order_By}&locale=es`;
+
+  try {
+    const response = await axios.get(URL_SEARCH_HOTEL, {
+      headers: options.headers,
+    });
+    const result = response.data.result;
+
+    let filteredResult = result;
+    if (userId) {
+      const [favorites] = await pool.query("SELECT property_id FROM favorites WHERE user_id = ?", [userId]);
+
+      if (favorites.length > 0) {
+        const favoriteIds = favorites.map(fav => fav.property_id);
+        filteredResult = result.filter(hotel => favoriteIds.includes(hotel.id));
+      }
+    }
+    return res.json(filteredResult);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred");
+  }
+};
