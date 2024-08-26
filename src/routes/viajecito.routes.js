@@ -2,6 +2,7 @@ import express from "express";
 import { getApiBooking,searchDestination,detailsApiBooking} from '../controllers/apiBookingController.js';
 import {registerUser,login,logout,profile} from '../controllers/authController.js'
 import { requireToken } from "../middlewares/requireToken.js";
+import { getFavorite, postFavorite } from "../controllers/favoriteController.js";
 const router = express.Router();
 
 
@@ -28,12 +29,20 @@ router.get('/protectedRoute', requireToken, (req, res) => {
   }
 });
 
-router.get('/privatePage', (req, res) => {
-  res.render('private/privatePage' , { layout: 'privateLayout' }); 
+// router.get('/privatePage', (req, res) => {
+//   res.render('private/privatePage' , { layout: 'privateLayout' }); 
+// });
+
+router.get('/favoritePublic', (req, res) => {
+  res.render('publicPages/favoritePublic' ); 
 });
 
-
 router.get("/profile",requireToken, profile);
+router.get("/favoritePrivate",requireToken, getFavorite);
+router.post("/favoritePrivate",requireToken, postFavorite);
+router.get("/privatePage", getApiBooking);
+
+router.post("/postFavorite/:hotel_id",requireToken,postFavorite)
 
 
 export default router;

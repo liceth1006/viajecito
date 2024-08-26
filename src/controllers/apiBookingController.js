@@ -61,10 +61,11 @@ export const getApiBooking = async (req, res) => {
       headers: options.headers,
     });
     const result = response.data.result;
-    if (req.path === "/") {
-      res.render("index", { items: result });
+
+    if (req.path === "/privatePage") {
+      res.render('private/privatePage' , { layout: 'privateLayout',items: result }); 
     } else if (req.path === "/hotel") {
-      res.render("hotel/hotel", { items: result });
+      res.render("publicPages/hotel", { items: result });
     } else {
       res.status(404).send("Página no encontrada");
     }
@@ -74,25 +75,26 @@ export const getApiBooking = async (req, res) => {
   }
 };
 
-
-
 const retryRequest = async (url, options, retries = 3) => {
   let attempt = 0;
   while (attempt < retries) {
     try {
       return await axios.get(url, options);
     } catch (error) {
-      if (error.response && error.response.status === 429) { // Código de estado 429: Demasiadas Solicitudes
+      if (error.response && error.response.status === 429) {
+        // Código de estado 429: Demasiadas Solicitudes
         attempt++;
         const delay = Math.pow(2, attempt) * 1000; // Retardo exponencial
-        console.log(`Rate limit exceeded. Retrying in ${delay / 1000} seconds...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
+        console.log(
+          `Rate limit exceeded. Retrying in ${delay / 1000} seconds...`
+        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
       } else {
         throw error; // Re-lanzar el error si no es un error de límite de tasa
       }
     }
   }
-  throw new Error('Max retries exceeded');
+  throw new Error("Max retries exceeded");
 };
 
 export const detailsApiBooking = async (req, res) => {
@@ -104,17 +106,16 @@ export const detailsApiBooking = async (req, res) => {
   try {
     const [detailsResponse, photosResponse] = await Promise.all([
       retryRequest(URL_HOTEL_DETAILS, { headers: options.headers }),
-      retryRequest(URL_HOTEL_PHOTO, { headers: options.headers })
+      retryRequest(URL_HOTEL_PHOTO, { headers: options.headers }),
     ]);
 
     const details = detailsResponse.data;
 
     // Buscar la descripción en español o tomar una descripción de cualquier idioma
     const descriptionTranslations = details.description_translations || [];
-    const descriptionSpanish = descriptionTranslations.find(
-      desc => desc.languagecode === 'es'
-    )?.description || 'Descripción no disponible';
-
+    const descriptionSpanish =
+      descriptionTranslations.find((desc) => desc.languagecode === "es")
+        ?.description || "Descripción no disponible";
 
     // Asegurarse de que photosResponse.data tiene al menos 3 elementos
     const photosArray = photosResponse.data;
@@ -122,8 +123,8 @@ export const detailsApiBooking = async (req, res) => {
     const photos2 = photosArray[1] || {};
     const photos3 = photosArray[2] || {};
 
-    console.log("foto",photos1)
-    res.render("hotel/hotelDetails", {
+    console.log("foto", photos1);
+    res.render("publicPages/hotelDetails", {
       details,
       photos1,
       photos2,

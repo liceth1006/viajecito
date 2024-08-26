@@ -13,20 +13,4 @@
     </select>
 </form>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('sortForm');
-    const select = document.getElementById('orderBy');
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderBy = urlParams.get('orderBy');
 
-    if (orderBy) {
-        select.value = orderBy;
-    }
-
-    // Escucha el cambio y envía el formulario
-    select.addEventListener('change', function() {
-        form.submit();
-    });
-});
-</script>

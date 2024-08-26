@@ -18,12 +18,12 @@ console.log("verificacion",token)
     // Verificar el token
     const decoded = jwt.verify(token, 'SflKxwRJSMeKKF2QT4fwpa'); // Usa la clave secreta desde las variables de entorno
     req.use_id = decoded.use_id; // Asigna el ID del usuario al objeto de solicitud
-
+    req.isAuthenticated = true;
     // Continuar con el siguiente middleware o ruta
     next();
   } catch (error) {
     console.error('Token verification error:', error.message);
-
+    req.isAuthenticated = false;
     // Enviar una respuesta de error 401 si la verificación falla
     return res.status(401).send({ error: tokenVerificationErrors[error.message] || 'Invalid token' });
   }
