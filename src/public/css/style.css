@@ -150,3 +150,33 @@
 .button-color{
   
 }
+
+.search {
+  background-color: #ffffff;
+  border-radius: 32px;
+  border: 1px solid #dddddd;
+  color: black;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .search {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .search {
+    padding: 20px;
+  }
+  .col-md-8, .col-md-4 {
+    width: 100%;
+  }
+  .search .row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

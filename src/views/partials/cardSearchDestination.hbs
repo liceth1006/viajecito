@@ -1,11 +1,14 @@
-<div class="card h-100">
-  <div class="image-container">
-    <img src="{{image_url}}" class="card-img-top" alt="{{name}}" />
+<div class="card mb-3  " >
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{image_url}}" class="img-fluid rounded-start" alt="{{name}}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{city_name}}</h5>
+        <p class="card-text">{{label}}</p>
+       <a href="/hoteldetails/{{id}}" class="btn btn-primary">Ver hoteles</a> 
+      </div>
+    </div>
   </div>
-  <div class="card-body">
-    <h5 class="card-title">{{name}}</h5>
-    <p class="card-text">{{label}}</p>
-     <a href="/hoteldetails/{{id}}" class="btn btn-primary">Comparar Precios</a> 
-  </div>
-  {{>favorite}}
 </div>

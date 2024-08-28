@@ -8,15 +8,23 @@ const options = {
   },
 };
 
+const option = {
+  method: 'GET',
+  headers: {
+    'x-rapidapi-key': '7d9b0ec683msh1ab79f1a54e26a2p104d66jsn7a6fb77397e7',
+    'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
+  }
+};
+
 export const searchDestination = async (req, res) => {
   const { name } = req.query;
   const nameLocation = name || "colombia";
-  const URL_SEARCH_DES = `https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=es&name=${nameLocation}`;
+  const URL_SEARCH_DES = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${nameLocation}`;
   try {
     const response = await axios.get(URL_SEARCH_DES, {
-      headers: options.headers,
+      headers: option.headers,
     });
-    const result = response.data;
+    const result = response.data.data;
     res.render("index", { items: result });
   } catch (error) {
     console.error(error);
