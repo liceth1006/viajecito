@@ -3,7 +3,7 @@ import axios, { Axios } from "axios";
 const options = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": "4b63e186f9msh973e823046a8fe3p110c93jsn5d4fcdb0c180",
+    "x-rapidapi-key": "910d13efccmshde90f7efd6cbbcdp1ede95jsnf82f41ed43ae",
     "x-rapidapi-host": "booking-com.p.rapidapi.com",
   },
 };
@@ -11,20 +11,20 @@ const options = {
 const option = {
   method: 'GET',
   headers: {
-    'x-rapidapi-key': '7d9b0ec683msh1ab79f1a54e26a2p104d66jsn7a6fb77397e7',
-    'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
+    'x-rapidapi-key': '910d13efccmshde90f7efd6cbbcdp1ede95jsnf82f41ed43ae',
+    'x-rapidapi-host': 'booking-com.p.rapidapi.com'
   }
 };
 
 export const searchDestination = async (req, res) => {
   const { name } = req.query;
   const nameLocation = name || "colombia";
-  const URL_SEARCH_DES = `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=${nameLocation}`;
+  const URL_SEARCH_DES = `https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=es&name=${nameLocation}`;
   try {
     const response = await axios.get(URL_SEARCH_DES, {
       headers: option.headers,
     });
-    const result = response.data.data;
+    const result = response.data;
     res.render("index", { items: result });
   } catch (error) {
     console.error(error);

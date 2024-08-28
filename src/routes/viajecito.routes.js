@@ -12,7 +12,7 @@ router.post("/register", registerUser);
 // Ruta para salir de la sesion
 router.post("/logout", logout);
 // Ruta para mostrar la página de inicio con los hoteles rutas publicas 
-router.get("/", searchDestination);
+//router.get("/", searchDestination);
 router.get("/hotel", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 
@@ -28,6 +28,22 @@ router.get('/protectedRoute', requireToken, (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 });
+
+
+router.get('/', (req, res) => {
+  try {
+    console.log("Ruta protegida accedida");
+    res.render("index");
+  } catch (error) {
+    console.error('Error en la ruta protegida:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+
+
+
+
 
 // router.get('/privatePage', (req, res) => {
 //   res.render('private/privatePage' , { layout: 'privateLayout' }); 

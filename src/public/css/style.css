@@ -1,13 +1,14 @@
+
+  html{
+    margin-bottom: 0;
+  }
+
 .body {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   color: black;
-  max-width: 1400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #e1e5f2;
+  margin-bottom: 0
 }
 .logo-link {
   display: flex;
@@ -179,4 +180,49 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+
+.radius{
+  border-radius: 20px;
+}
+input{
+
+}
+.form-control {
+  height: 50px; /* Ajusta la altura del input */
+  font-size: 1.2rem; /* Ajusta el tamaño del texto dentro del input */
+  border: none; /* Elimina el borde del input */
+  box-shadow: none; /* Elimina la sombra del borde */
+  border-radius: 25px; /* Ajusta el radio de los bordes para hacerlo redondeado */
+  padding-left: 20px; /* Añade espacio a la izquierda para el ícono */
+}
+
+.form-control:focus {
+  box-shadow: none; /* Elimina el efecto de enfoque */
+  outline: none; /* Elimina el contorno del enfoque */
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-container .fa-map {
+  position: absolute;
+  left: 15px;
+  color: #999;
+  font-size: 1.2rem; /* Ajusta el tamaño del ícono */
+}
+
+.input-container input {
+  padding-left: 40px; /* Espacio para el ícono */
+}
+
+.bg-body {
+  background-color: #f8f9fa; /* Ajusta el color de fondo */
+  padding: 20px;
+  border-radius: 10px; /* Ajusta el radio del borde */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Añade sombra para efecto de profundidad */
 }
