@@ -31,7 +31,7 @@
 
 .search {
   background-color: #ffffff;
-  border-radius: 32px;
+  border-radius: 28px;
   border: 1px solid #dddddd;
   position: relative;
   display: flex;
@@ -186,16 +186,20 @@
 .radius{
   border-radius: 20px;
 }
-input{
-
+.search {
+  background-color: #ffffff;
+  border-radius: 28px;
+  border: 1px solid #dddddd;
+  padding: 10px;
 }
+
 .form-control {
   height: 50px; /* Ajusta la altura del input */
   font-size: 1.2rem; /* Ajusta el tamaño del texto dentro del input */
   border: none; /* Elimina el borde del input */
   box-shadow: none; /* Elimina la sombra del borde */
   border-radius: 25px; /* Ajusta el radio de los bordes para hacerlo redondeado */
-  padding-left: 20px; /* Añade espacio a la izquierda para el ícono */
+  padding-left: 40px; /* Añade espacio a la izquierda para el ícono */
 }
 
 .form-control:focus {
@@ -209,7 +213,7 @@ input{
   align-items: center;
 }
 
-.input-container .fa-map {
+.input-container i {
   position: absolute;
   left: 15px;
   color: #999;
@@ -220,9 +224,21 @@ input{
   padding-left: 40px; /* Espacio para el ícono */
 }
 
-.bg-body {
-  background-color: #f8f9fa; /* Ajusta el color de fondo */
-  padding: 20px;
-  border-radius: 10px; /* Ajusta el radio del borde */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Añade sombra para efecto de profundidad */
+.dropdown-menu {
+  min-width: 200px; /* Asegura que el menú desplegable tenga un ancho mínimo */
 }
+
+.btn-primary {
+  border-radius: 25px; /* Redondea el borde del botón */
+  height: 50px; /* Ajusta la altura del botón para que coincida con los inputs */
+}
+
+.btn {
+  font-size: 1.2rem; /* Ajusta el tamaño del texto en el botón */
+}
+
+.select-container  i{
+  color: #999;
+  font-size: 1.2rem; 
+}
+

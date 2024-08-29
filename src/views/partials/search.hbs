@@ -1,82 +1,111 @@
-<div class="container  search">
-  <form id="Form" action="/hotel"  method="get">
-    <div class="row py-2">
-      <div class="col-md-3 ">
-        <label for="destination" class="form-label">Destino</label>
-        <input
-          type="text"
-          class="form-control"
-          id="destination"
-          name="destination"
-          placeholder="Ingrese el destino"
-        />
-      </div>
-      <div class="col-md-2 ">
-        <label for="arrival" class="form-label">Llegada</label>
-        <input type="date" class="form-control" id="arrival" name="arrival" />
-      </div>
-      <div class="col-md-2 ">
-        <label for="departure" class="form-label">Salida</label>
-        <input
-          type="date"
-          class="form-control"
-          id="departure"
-          name="departure"
-        />
-      </div>
-      <div class="col-md-3 mb-sm-5 mb-md-0 ">
-        <label class="form-label">Número de personas</label>
-        <div class="dropdown">
-          <button
-            class="btn  dropdown-toggle w-100"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Seleccione
-          </button>
-          <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
-            <li class="mb-2">
-              <label for="adults" class="form-label">Adultos</label>
-              <input
-                type="number"
-                class="form-control"
-                id="adults"
-                name="adults"
-                placeholder="Número de adultos"
-              />
-            </li>
-            <li class="mb-2">
-              <label for="children" class="form-label">Niños</label>
-              <input
-                type="number"
-                class="form-control"
-                id="children"
-                name="children"
-                placeholder="Número de niños"
-              />
-            </li>
-            <li>
-              <label for="rooms" class="form-label">Habitaciones</label>
-              <input
-                type="number"
-                class="form-control"
-                id="rooms"
-                name="rooms"
-                placeholder="Número de habitaciones"
-              />
-            </li>
-          </ul>
+<form id="Form" action="/hotel" method="get">
+  <input
+    type="hidden"
+    class="form-control"
+    id="dest_id"
+    name="dest_id"
+    placeholder="Ingrese el destino"
+  />
+</form>
+
+<div class="container search">
+  <form id="Form" action="/hotel" method="get">
+    <div class="row align-items-center">
+      <div class="col-md-3 mb-3 mb-md-0">
+        <div class="input-container">
+          <i class="fa-regular fa-map"></i>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="A dónde quieres ir?"
+          />
         </div>
       </div>
-     <div class="d-grid col-6 col-md-2">
-    <button type="submit" class="button">
-      <span> <i class="fa-solid fa-magnifying-glass mx-2"></i>Buscar</span>
-      
-     </button>
-</div>
-
+      <div class="col-md-2 mb-3 mb-md-0">
+        <div class="input-container">
+          <i class="fa-solid fa-plane-arrival"></i>
+          <input type="date" class="form-control" id="arrival" name="arrival" />
+        </div>
+      </div>
+      <div class="col-md-2 mb-3 mb-md-0">
+        <div class="input-container">
+          <i class="fa-solid fa-plane-departure"></i>
+          <input
+            type="date"
+            class="form-control"
+            id="departure"
+            name="departure"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 mb-3 mb-md-0">
+        <div class="select-container">    
+          <div class="dropdown">
+            <button
+              class="btn dropdown-toggle w-100"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            <i class="fa-solid fa-people-line"></i>  Seleccione
+            </button>
+            <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
+              <li class="mb-2">
+                <label for="adults" class="form-label">Adultos</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="adults"
+                  name="adults"
+                  placeholder="Número de adultos"
+                />
+              </li>
+              <li class="mb-2">
+                <label for="children" class="form-label">Niños</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="children"
+                  name="children"
+                  placeholder="Número de niños"
+                />
+              </li>
+              <li>
+                <label for="rooms" class="form-label">Habitaciones</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="rooms"
+                  name="rooms"
+                  placeholder="Número de habitaciones"
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Buscar
+        </button>
+      </div>
     </div>
   </form>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() { // Obtén el dest_id
+  del almacenamiento local const destId = localStorage.getItem('dest_id'); const
+  name = localStorage.getItem('name'); // Rellena el campo de entrada con el
+  dest_id si está disponible const destInput =
+  document.getElementById('dest_id'); if (destInput && destId) { destInput.value
+  = destId; // Envía el formulario automáticamente
+  document.getElementById('Form').submit(); } // Borra el dest_id del
+  almacenamiento local para evitar que persista en futuras visitas
+  localStorage.removeItem('dest_id'); });
+
+</script>

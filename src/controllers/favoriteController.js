@@ -60,3 +60,51 @@ export const postFavorite = async (req,res)=>{
 
   }
 }
+
+
+// export const postFavorite = async (req, res) => {
+//   try {
+//     const {
+//       hotel_id,
+//       hotel_name_trans,
+//       max_photo_url,
+//       review_score_word,
+//       review_score,
+//       city,
+//       address,
+//       gross_amount_per_night
+//     } = req.body;
+    
+//     const userId = req.use_id;
+//     if (!hotel_id || !userId) {
+//       return res.status(400).json({ error: "El ID de la propiedad y el ID de usuario son requeridos" });
+//     }
+
+//     const newFavorite = {
+//       use_id: userId,
+//       property_id: hotel_id,
+//       hotel_name_trans,
+//       max_photo_url,
+//       review_score_word,
+//       review_score,
+//       city,
+//       address,
+//       gross_amount_per_night
+//     };
+
+//     // Verificar si el favorito ya existe para evitar duplicados
+//     const [existingFavorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ? AND property_id = ?", [userId, hotel_id]);
+
+//     if (existingFavorites.length > 0) {
+//       return res.status(400).json({ error: "Este favorito ya existe" });
+//     }
+
+//     // Insertar el nuevo favorito
+//     await pool.query("INSERT INTO favorites SET ?", [newFavorite]);
+
+//     res.status(201).json({ message: "Favorito agregado exitosamente" });
+//   } catch (error) {
+//     console.error('Error al agregar favorito:', error);
+//     res.status(500).json({ error: "Error interno del servidor" });
+//   }
+// }

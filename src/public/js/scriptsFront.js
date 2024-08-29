@@ -131,29 +131,63 @@ function handleSortForm() {
   }
 }
 
+
+function searchDestination (){
+
+  const form = document.getElementById('destinationForm');
+  const input = document.getElementById('name');
+
+  // Verifica si el formulario y el input están presentes
+  if (form && input) {
+    // Obtiene los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    const name = urlParams.get('name');
+
+    // Si hay un valor 'name' en la URL, se lo asigna al input
+    if (name) {
+      input.value = name;
+    }
+  }
+}
+
+
 //funcion para guardar favorito
-async function postFavorite(hotelId) {
+// Función para guardar favorito
+async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, reviewScore, city, address, grossAmountPerNight) {
   const token = localStorage.getItem('token');
-const img = document.getElementById(`img-${hotelId}`)
+  const img = document.getElementById(`img-${hotelId}`);
+
   try {
-    const response = await fetch(`/postFavorite/${hotelId}`, {
+    const response = await fetch('/postFavorite', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-      }
+      },
+      body: JSON.stringify({
+        hotel_id: hotelId,
+        hotel_name_trans: hotelName,
+        max_photo_url: photoUrl,
+        review_score_word: reviewScoreWord,
+        review_score: reviewScore,
+        city: city,
+        address: address,
+        gross_amount_per_night: grossAmountPerNight
+      })
     });
 
     if (response.ok) {
       console.log("Hotel ID:", hotelId);
       console.log("Agregado a favoritos");
-       // Cambiar imagen para reflejar el estado de favorito
-        img.src = "../img/iconFavorito.png";
+      img.src = "../img/iconFavorito.png";
     } else {
       console.log('Error al agregar favorito');
+      // Mostrar mensaje de error al usuario
     }
   } catch (error) {
     console.error('Error al agregar favorito:', error);
+    // Mostrar mensaje de error al usuario
   }
 }
 
@@ -263,5 +297,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Llama a la función para manejar el formulario de ordenación
   handleSortForm();
+  searchDestination()
 });
 

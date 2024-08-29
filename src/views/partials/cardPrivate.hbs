@@ -53,9 +53,10 @@
     </div>
   </div>
 
-  <!-- Botón de favorito -->
-  <div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}')">
-    <img   id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
-  </div>
+<!-- Botón de favorito -->
+<div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}', '{{hotel_name_trans}}', '{{max_photo_url}}', '{{review_score_word}}', {{review_score}}, '{{city}}', '{{address}}', {{gross_amount_per_night}})">
+  <img id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+</div>
+
 </div>
 

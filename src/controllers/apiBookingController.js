@@ -3,7 +3,7 @@ import axios, { Axios } from "axios";
 const options = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": "910d13efccmshde90f7efd6cbbcdp1ede95jsnf82f41ed43ae",
+    "x-rapidapi-key": "0b721f529bmsha610128bebffaffp1c9c7ejsn10d861f0127f",
     "x-rapidapi-host": "booking-com.p.rapidapi.com",
   },
 };
@@ -11,7 +11,7 @@ const options = {
 const option = {
   method: 'GET',
   headers: {
-    'x-rapidapi-key': '910d13efccmshde90f7efd6cbbcdp1ede95jsnf82f41ed43ae',
+    'x-rapidapi-key': '0b721f529bmsha610128bebffaffp1c9c7ejsn10d861f0127f',
     'x-rapidapi-host': 'booking-com.p.rapidapi.com'
   }
 };
@@ -25,6 +25,7 @@ export const searchDestination = async (req, res) => {
       headers: option.headers,
     });
     const result = response.data;
+    console.log("este es ", result)
     res.render("index", { items: result });
   } catch (error) {
     console.error(error);
@@ -40,6 +41,7 @@ export const getApiBooking = async (req, res) => {
     room_number,
     children_number,
     adults_number,
+    dest_id
   } = req.query;
 
   const order_By = orderBy || "popularity";
@@ -60,9 +62,9 @@ export const getApiBooking = async (req, res) => {
   const checkin = checkin_date || formattedDate;
   const checkout = checkout_date || formattedCheckoutDate;
   const dest_type = "country" || "city";
-  const dest_id = "47";
+  const destId = dest_id || "47";
 
-  const URL_SEARCH_HOTEL = `https://booking-com.p.rapidapi.com/v1/hotels/search?&adults_number=${adult}&children_number=${children}&room_number=${room}&include_adjacency=true&units=metric&checkout_date=${checkout}&dest_id=47&filter_by_currency=COP&dest_type=${dest_type}&checkin_date=${checkin}&order_by=${order_By}&locale=es`;
+  const URL_SEARCH_HOTEL = `https://booking-com.p.rapidapi.com/v1/hotels/search?&adults_number=${adult}&children_number=${children}&room_number=${room}&include_adjacency=true&units=metric&checkout_date=${checkout}&dest_id=${destId}&filter_by_currency=COP&dest_type=${dest_type}&checkin_date=${checkin}&order_by=${order_By}&locale=es`;
 
   try {
     const response = await axios.get(URL_SEARCH_HOTEL, {

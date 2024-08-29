@@ -1,14 +1,42 @@
-<div class="card mb-3 h-100  " >
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="{{image_url}}" class="img-fluid rounded-start" alt="{{name}}">
+<div class="card mb-3 h-100">
+  <div class="row g-0 h-100">
+    <div class="col-md-4 d-flex align-items-center h-100">
+      <img
+        src="{{image_url}}"
+        class="img-fluid rounded-start mx-auto d-block h-100"
+        alt="{{name}}"
+        style="object-fit: cover;"
+      />
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{city_name}}</h5>
+        <h5 class="card-title">Pais: {{country}}</h5>
+        <p class="card-text">Cantidad de Hoteles: {{hotels}}</p>
         <p class="card-text">{{label}}</p>
-       <a href="/hoteldetails/{{id}}" class="btn btn-primary">Ver hoteles</a> 
+        <button class="viewHotelsBtn btn btn-primary" data-dest-id="{{dest_id}}" data-dest-name="{{name}}">
+          <i class="fa-regular fa-eye mx-2"></i> Ver hoteles
+        </button>
       </div>
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Selecciona todos los botones con la clase 'viewHotelsBtn'
+    const viewHotelsBtns = document.querySelectorAll('.viewHotelsBtn');
+
+    // Agrega un evento de clic a cada botón
+    viewHotelsBtns.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Obtén el dest_id del atributo data-dest-id
+        const destId = button.getAttribute('data-dest-id');
+        const destName = button.getAttribute('data-dest-name');
+        // Guarda el dest_id en el almacenamiento local
+        localStorage.setItem('dest_id', destId);
+        localStorage.setItem('name', destName);
+        // Redirige a la página de hoteles
+        window.location.href = '/hotel';
+      });
+    });
+  });
+</script>
