@@ -1,32 +1,20 @@
-<form id="Form" action="/hotel" method="get">
-  <input
-    type="hidden"
-    class="form-control"
-    id="dest_id"
-    name="dest_id"
-    placeholder="Ingrese el destino"
-  />
-</form>
-
 <div class="container search">
-  <form id="Form" action="/hotel" method="get">
+  <form id="FormHotel" action="/hotel" method="get">
     <div class="row align-items-center">
       <div class="col-md-3 mb-3 mb-md-0">
         <div class="input-container">
-          <i class="fa-regular fa-map"></i>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="A dónde quieres ir?"
-          />
+             <select class="form-control" id="dest_id" name="dest_id">
+            <option hidden  value="">Seleccione un destino</option>
+            <option value="47">colombia</option>
+            <option value="-595817">Puerto Colombia</option>
+            <option value="88791">Italia</option>
+          </select>
         </div>
       </div>
       <div class="col-md-2 mb-3 mb-md-0">
         <div class="input-container">
           <i class="fa-solid fa-plane-arrival"></i>
-          <input type="date" class="form-control" id="arrival" name="arrival" />
+          <input type="date" class="form-control" id="checkin_date" name="checkin_date" />
         </div>
       </div>
       <div class="col-md-2 mb-3 mb-md-0">
@@ -35,8 +23,8 @@
           <input
             type="date"
             class="form-control"
-            id="departure"
-            name="departure"
+            id="checkout_date"
+            name="checkout_date"
           />
         </div>
       </div>
@@ -58,8 +46,8 @@
                 <input
                   type="number"
                   class="form-control"
-                  id="adults"
-                  name="adults"
+                  id="adults_number"
+                  name="adults_number"
                   placeholder="Número de adultos"
                 />
               </li>
@@ -68,8 +56,8 @@
                 <input
                   type="number"
                   class="form-control"
-                  id="children"
-                  name="children"
+                  id="children_number"
+                  name="children_number"
                   placeholder="Número de niños"
                 />
               </li>
@@ -78,8 +66,8 @@
                 <input
                   type="number"
                   class="form-control"
-                  id="rooms"
-                  name="rooms"
+                  id="room_number"
+                  name="room_number"
                   placeholder="Número de habitaciones"
                 />
               </li>
@@ -97,15 +85,3 @@
   </form>
 </div>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() { // Obtén el dest_id
-  del almacenamiento local const destId = localStorage.getItem('dest_id'); const
-  name = localStorage.getItem('name'); // Rellena el campo de entrada con el
-  dest_id si está disponible const destInput =
-  document.getElementById('dest_id'); if (destInput && destId) { destInput.value
-  = destId; // Envía el formulario automáticamente
-  document.getElementById('Form').submit(); } // Borra el dest_id del
-  almacenamiento local para evitar que persista en futuras visitas
-  localStorage.removeItem('dest_id'); });
-
-</script>

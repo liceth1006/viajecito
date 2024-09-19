@@ -151,6 +151,51 @@ function searchDestination (){
   }
 }
 
+function searchHotel() {
+  const form = document.getElementById('FormHotel');
+  const inputDestination = document.querySelector('select[name="dest_id"]');
+  const inputArrival = document.getElementById('checkin_date');
+  const inputDeparture = document.getElementById('checkout_date');
+  const inputAdults = document.getElementById('adults_number');
+  const inputChildren = document.getElementById('children_number');
+  const inputRooms = document.getElementById('room_number');
+
+  // Verifica si el formulario y los inputs están presentes
+  if (form && inputDestination) {
+    // Obtiene los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Asigna los valores de los parámetros a los inputs
+    const destinationValue = urlParams.get('dest_id');
+    const arrivalValue = urlParams.get('checkin_date');
+    const departureValue = urlParams.get('checkout_date');
+    const adultsValue = urlParams.get('adults_number');
+    const childrenValue = urlParams.get('children_number');
+    const roomsValue = urlParams.get('room_number');
+
+    // Si hay valores, se los asigna a los inputs
+    if (destinationValue) {
+      inputDestination.value = destinationValue;
+    }
+    if (arrivalValue) {
+      inputArrival.value = arrivalValue;
+    }
+    if (departureValue) {
+      inputDeparture.value = departureValue;
+    }
+    if (adultsValue) {
+      inputAdults.value = adultsValue;
+    }
+    if (childrenValue) {
+      inputChildren.value = childrenValue;
+    }
+    if (roomsValue) {
+      inputRooms.value = roomsValue;
+    }
+  }
+}
+
+
 
 //funcion para guardar favorito
 // Función para guardar favorito

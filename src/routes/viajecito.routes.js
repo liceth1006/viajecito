@@ -13,7 +13,7 @@ router.post("/register", registerUser);
 router.post("/logout", logout);
 // Ruta para mostrar la página de inicio con los hoteles rutas publicas 
 router.get("/", searchDestination);
-// router.get("/hotel", getApiBooking);
+  router.get("/hotel", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 
 // Rutas protegidas (requieren autenticación)
@@ -51,6 +51,10 @@ router.get('/hotel', (req, res) => {
 
 router.get('/favoritePublic', (req, res) => {
   res.render('publicPages/favoritePublic' ); 
+});
+
+router.get('/bookingPublic', (req, res) => {
+  res.render('publicPages/bookingPublic' ); 
 });
 
 router.get("/profile",requireToken, profile);

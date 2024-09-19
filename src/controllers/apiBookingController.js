@@ -25,7 +25,6 @@ export const searchDestination = async (req, res) => {
       headers: option.headers,
     });
     const result = response.data;
-    console.log("este es ", result)
     res.render("index", { items: result });
   } catch (error) {
     console.error(error);
@@ -186,7 +185,8 @@ export const getApiBookingFavorite = async (req, res) => {
       headers: options.headers,
     });
     const result = response.data.result;
-
+    console.log("este es resullll")
+console.log(result)
     let filteredResult = result;
     if (userId) {
       const [favorites] = await pool.query("SELECT property_id FROM favorites WHERE user_id = ?", [userId]);
