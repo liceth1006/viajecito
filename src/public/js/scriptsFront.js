@@ -17,24 +17,50 @@ async function handleLoginFormSubmit(event) {
     const data = await response.json();
 
     if (response.ok) {
-      // Guarda el token en el almacenamiento local
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.userId);
-      // Llama a una función que maneje la solicitud a la ruta protegida
       await accessProtectedRoute();
     } else {
-      // Maneja el error de inicio de sesión
-      alert(data.error);
+      alertSweet('error','Oops...',data.error)
+      
     }
   } catch (error) {
     handleError(error);
   }
 }
 
-// Función para manejar errores generales
-function handleError(error) {
-  console.error("Error:", error);
-  alert("Ocurrió un error al intentar iniciar sesión.");
+// Función para manejar el envío del formulario de registro
+async function registerUser(event) {
+  event.preventDefault();
+
+  const formData = {
+    use_mail: document.getElementById("user_mail").value,
+    use_password: document.getElementById("user_password").value,
+    use_name: document.getElementById("use_name").value,
+    use_lastname: document.getElementById("use_lastname").value,
+    use_birthdate: document.getElementById("use_birthdate").value,
+  };
+console.log(formData)
+  try {
+    const response = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alertSweet('success','Registro exitoso',data.message)
+      document.getElementById("registerForm").reset(); 
+    } else {
+      alertSweet('error','Oops...',data.error)
+    }
+  } catch (error) {
+    alertSweet('error','Error','Error al registrar el usuario. Inténtalo de nuevo.')
+  }
 }
 
 // Función para acceder a la ruta protegida
@@ -59,9 +85,41 @@ async function accessProtectedRoute() {
     }
   } catch (error) {
     console.error("Error:", error);
-    alert("Ocurrió un error al intentar acceder a la ruta protegida.");
+    alertSweet('error','Error','Ocurrió un error al intentar acceder a la ruta protegida.')
+
   }
 }
+
+
+
+// Función para acceder a la ruta protegida locacion
+async function accessProtectedRoute() {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch("/protectedRoute", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      window.location.href = "/privatePage";
+    } else if (response.status === 401) {
+      // Redirige a la página de login si el token no es válido
+      window.location.href = "/login";
+    } else {
+      alert("Error al acceder a la ruta protegida.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alertSweet('error','Error','Ocurrió un error al intentar acceder a la ruta protegida.')
+
+  }
+}
+
+
 
 // Función para obtener los datos del usuario y actualizar el botón
 async function updateUserInfo() {
@@ -100,12 +158,14 @@ async function handleLogout() {
     const data = await response.json();
 
     if (response.ok) {
-      alert("Salida exitosa");
+      alertSweet('success','Salida exitosa',null)
+      
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       window.location.href = "/";
     } else {
-      alert(data.error);
+      alertSweet('error','Error',data.error)
+      
     }
   } catch (error) {
     console.error('Error:', error);
@@ -123,13 +183,29 @@ function handleSortForm() {
     if (orderBy) {
       select.value = orderBy;
     }
-
-    // Escucha el cambio y envía el formulario
     select.addEventListener('change', function() {
       form.submit();
     });
   }
 }
+
+
+//funcion alert
+ function alertSweet(icon,title,text){
+  Swal.fire({
+    icon: icon,
+    title: title,
+    text: text,
+     confirmButtonColor: '#002B5B'
+  });
+ }
+
+
+
+
+
+
+
 
 
 function searchDestination (){
@@ -322,15 +398,7 @@ console.log(data)
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("enviooo");
 
-  // Evento para el formulario de inicio de sesión
-  const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleLoginFormSubmit);
-  }
-
-  // Llama a la función para actualizar la información del usuario
   updateUserInfo();
   getFavorite()
 
@@ -345,3 +413,9 @@ document.addEventListener("DOMContentLoaded", () => {
   searchDestination()
 });
 
+
+// Función para manejar errores generales
+function handleError(error) {
+  alertSweet('error','Error','Ocurrió un error al intentar iniciar sesión.')
+  
+}

@@ -12,7 +12,7 @@ router.post("/register", registerUser);
 // Ruta para salir de la sesion
 router.post("/logout", logout);
 // Ruta para mostrar la página de inicio con los hoteles rutas publicas 
-router.get("/", searchDestination);
+ router.get("/", searchDestination);
   router.get("/hotel", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 
@@ -30,10 +30,10 @@ router.get('/protectedRoute', requireToken, (req, res) => {
 });
 
 
-router.get('/hotel', (req, res) => {
+router.get('/', (req, res) => {
   try {
     console.log("Ruta protegida accedida");
-    res.render("publicPages/hotel");
+    res.render("index");
   } catch (error) {
     console.error('Error en la ruta protegida:', error);
     res.status(500).send('Error interno del servidor');
@@ -45,9 +45,9 @@ router.get('/hotel', (req, res) => {
 
 
 
-// router.get('/privatePage', (req, res) => {
-//   res.render('private/privatePage' , { layout: 'privateLayout' }); 
-// });
+router.get('/privateIndex', (req, res) => {
+  res.render('private/privateIndex' , { layout: 'privateLayout' }); 
+});
 
 router.get('/favoritePublic', (req, res) => {
   res.render('publicPages/favoritePublic' ); 
@@ -62,7 +62,7 @@ router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
 
 router.post("/favoritePrivate",requireToken, postFavorite);
 router.get("/privatePage", getApiBooking);
-
+// router.get("/privateIndex", searchDestination);
 router.post("/postFavorite/:hotel_id",requireToken,postFavorite)
 
 

@@ -6,8 +6,8 @@
 .body {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
-  color: black;
-  background-color: #e1e5f2;
+  color: #1A1A40;
+  background-color: #eeeeee;
   margin-bottom: 0
 }
 .logo-link {
@@ -242,3 +242,6 @@
   font-size: 1.2rem; 
 }
 
+.right{
+  right: 20px;;
+}

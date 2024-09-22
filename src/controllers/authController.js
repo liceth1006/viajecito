@@ -61,7 +61,7 @@ export const registerUser = async (req, res) => {
     // Crear un nuevo usuario
     const newUser = {
       use_mail,
-      use_password: hashedPassword, // Usar la contraseña cifrada
+      use_password: hashedPassword, 
       use_name,
       use_lastname,
       use_birthdate

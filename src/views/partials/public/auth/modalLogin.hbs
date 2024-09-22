@@ -11,7 +11,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Iniciar Sesión</h1>
+        <h2 class="text-center" id="staticBackdropLabel">Iniciar Sesión</h2>
         <button
           type="button"
           class="btn-close"
@@ -20,7 +20,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form id="loginForm">
+        <form id="loginForm" onsubmit="handleLoginFormSubmit(event)">
           <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico</label>
             <input

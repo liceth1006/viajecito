@@ -25,7 +25,16 @@ export const searchDestination = async (req, res) => {
       headers: option.headers,
     });
     const result = response.data;
-    res.render("index", { items: result });
+
+    if (req.path === "/privateIndex") {
+      res.render('private/privateIndex' , { layout: 'privateLayout',items: result }); 
+    } else if (req.path === "/") {
+      res.render("index", { items: result });
+    } else {
+      res.status(404).send("Página no encontrada");
+    }
+    
+    
   } catch (error) {
     console.error(error);
     res.status(500).send("An error occurred");

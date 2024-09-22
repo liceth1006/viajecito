@@ -21,7 +21,7 @@
       </div>
     </div>
     <h4>Precio por noche: {{composite_price_breakdown.gross_amount_per_night.amount_unrounded}}</h4>
-    <h4>Precio Total: {{composite_price_breakdown.all_inclusive_amount.amount_rounded}}</h4>
+    <h4>Precio Total:{{composite_price_breakdown.gross_amount_hotel_currency.amount_unrounded}}</h4>
     <p class="card-text mb-0">{{ribbon_text}}</p>
     <p class="card-text mb-0">Cancelación gratuita:
       {{#if is_free_cancellable}}

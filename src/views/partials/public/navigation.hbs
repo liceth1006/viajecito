@@ -1,0 +1,84 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #18277c">
+  <div class="container-fluid">
+    <a href="/" class="logo-link">
+      <img style="width: 15%;" src="../img/Logo_blanco.png" alt="logo" />
+      <span class="title text-light">Viajecitos</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      style="background-color: white;"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon text-black"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav" style="margin-left:auto;">
+        <li class="nav-item">
+          <a
+            class="nav-link text-light fs-xl"
+            style="display: flex; align-items: center; "
+            href="/hotel"
+          >
+            <i class="fa-solid fa-hotel mx-2"></i>Alojamientos</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light fs-xl"
+            style="display: flex; align-items: center; "
+            href="/favoritePublic"
+          >
+            <i class="fa-solid fa-heart mx-2"></i>Favoritos</a>
+        </li>
+      </ul>
+      <div class="d-flex justify-content-between">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn dropdown-toggle"
+            style="background-color: #F0F0F0; color:#1A1A40;"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span>
+              <i class="fa-solid fa-bars mx-2"></i><i
+                class="fa-solid fa-circle-user"
+              ></i>
+            </span>
+          </button>
+          <ul class="dropdown-menu" style="margin-left:-65px;">
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                <i class="fa-solid fa-circle-user mx-2"></i>Inicia sesión
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#staticBack"
+              >
+                <i class="fa-solid fa-user-pen mx-2"></i>
+                Regístrate
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</nav>

@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #18277c">
+  <div class="container-fluid">
+    <a href="/privateIndex" class="logo-link">
+      <img style="width: 15%;" src="../img/Logo_blanco.png" alt="logo" />
+      <span class="title text-light">Viajecitos</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon text-light"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav" style="margin-left:auto;">
+        <li class="nav-item">
+          <a
+            class="nav-link text-light fs-xl"
+            style="display: flex; align-items: center; "
+            href="/privatePage"
+          > <i class="fa-solid fa-hotel mx-2"></i>Alojamientos</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-light fs-xl"
+            style="display: flex; align-items: center; "
+            href="/favoritePrivate"
+          > <i class="fa-solid fa-heart mx-2"></i>Favoritos</a>
+        </li>
+      </ul>
+      <div class="d-flex justify-content-between">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-primary dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="background-color: #F0F0F0; color:#1A1A40;"
+            id="userInfoButton"
+          >
+            <span id="userName"></span>
+          </button>
+          <ul class="dropdown-menu" style="margin-left:-65px;">
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#profileModal"
+              >
+                <i class="fa-solid fa-circle-user mx-2"></i>Perfil
+              </button>
+            </li>
+              <li></li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#profileModal"
+              >
+                <i class="fa-solid fa-book  mx-2"></i>Mis reservas
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="nav-link text-black"
+                style="display: flex; align-items: center; "
+                data-bs-toggle="modal"
+                data-bs-target="#logoutModal"
+                id="logout"
+              >
+              
+                <i class="fa-solid fa-arrow-right-from-bracket mx-2"></i>
+                Salir
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{{>modalLogout}}
+</nav>
