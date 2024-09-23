@@ -76,36 +76,7 @@ async function accessProtectedRoute() {
     });
     if (response.ok) {
       const data = await response.json();
-      window.location.href = "/privatePage";
-    } else if (response.status === 401) {
-      // Redirige a la página de login si el token no es válido
-      window.location.href = "/login";
-    } else {
-      alert("Error al acceder a la ruta protegida.");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alertSweet('error','Error','Ocurrió un error al intentar acceder a la ruta protegida.')
-
-  }
-}
-
-
-
-// Función para acceder a la ruta protegida locacion
-async function accessProtectedRoute() {
-  const token = localStorage.getItem("token");
-
-  try {
-    const response = await fetch("/protectedRoute", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      window.location.href = "/privatePage";
+      window.location.href = "/private";
     } else if (response.status === 401) {
       // Redirige a la página de login si el token no es válido
       window.location.href = "/login";
@@ -332,37 +303,54 @@ async function checkFavorite(hotelId) {
 
 
 // Función para obtener los favoritos
-async function getFavorite() {
-  const token = localStorage.getItem("token");
-  const user = localStorage.getItem('user');
-  try {
-    const response = await fetch('/favorite', {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`, 
-        'Content-Type': 'application/json',
-      },
-    });
+// async function getFavorite() {
+//   const token = localStorage.getItem("token");
+//   const user = localStorage.getItem('user');
+//   try {
+//     const response = await fetch('/favorite', {
+//       method: "GET",
+//       headers: {
+//         Authorization: `Bearer ${token}`, 
+//         'Content-Type': 'application/json',
+//       },
+//     });
 
-    if (response.ok) {
+//     if (response.ok) {
       
-      const data = await response.json();
-      window.location.href = "/favorite";
-    } else {
-      alertSweet('error', 'Oops...', data.error || 'Error al obtener favoritos');
-    }
-  } catch (error) {
-    alertSweet('error', 'Error', 'Error al obtener los favoritos. Inténtalo de nuevo.');
-  }
-}
+//       const data = await response.json();
+//       window.location.href = "/favorite";
+//     } else {
+//       alertSweet('error', 'Oops...', data.error || 'Error al obtener favoritos');
+//     }
+//   } catch (error) {
+//     alertSweet('error', 'Error', 'Error al obtener los favoritos. Inténtalo de nuevo.');
+//   }
+// }
 
-// Llama a la función para obtener los favoritos
-getFavorite();
+
+  // Función para establecer la acción del formulario
+  function setFormAction() {
+    const form = document.getElementById('sortForm');
+    const currentPath = window.location.pathname;
+
+    // Cambia la acción según la ruta actual
+    if (currentPath === "/hotelpublic") {
+      form.action = "/hotelpublic";
+    } else if (currentPath === "/hotelprivate") {
+      form.action = "/hotelprivate";
+    }
+
+    // Manejar el evento de cambio en el select
+    const select = document.getElementById('orderBy');
+    select.addEventListener('change', function() {
+      form.submit();
+    });
+  }
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  getFavorite()
+  // getFavorite()
   updateUserInfo();
 
 
@@ -375,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Llama a la función para manejar el formulario de ordenación
   handleSortForm();
   searchDestination()
-
+  setFormAction()
   const hotels = document.querySelectorAll('.favorite');
     hotels.forEach((hotel) => {
       const hotelId = hotel.id;

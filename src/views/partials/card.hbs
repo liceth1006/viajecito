@@ -51,9 +51,10 @@
       hasta
       {{checkout.until}}</p>
     <div class="d-grid gap-2 col-6 mx-auto mt-2">
-      <a href="/hotelDetails/{{hotel_id}}" class="btn btn-primary">
+      <a href="#" class="btn btn-primary" onclick="viewHotel('{{hotel_id}}')">
         <span>Ver disponibilidad
-          <i class="fa-solid fa-chevron-right"></i></span></a>
+          <i class="fa-solid fa-chevron-right"></i></span>
+      </a>
     </div>
 
     <div class="position-absolute top-0 end-0 p-3">
@@ -68,3 +69,13 @@
     <img src="../img/iconNoFavorito.png" alt="" />
   </a>
 </div>
+
+<script>
+  function viewHotel(hotelId) { // Obtener la ruta actual const currentPath =
+  window.location.pathname; // Cambia la redirección según la ruta actual let
+  url; if (currentPath === "/hotelpublic") { url = `/hotelDetails/${hotelId}`;
+  // Redirigir a la ruta pública } else if (currentPath === "/hotelprivate") {
+  url = `/hotelDetailsPrivate/${hotelId}`; // Redirigir a la ruta privada } else
+  { url = `/hotelDetails/${hotelId}`; // Ruta por defecto } // Redirigir a la
+  URL construida window.location.href = url; }
+</script>

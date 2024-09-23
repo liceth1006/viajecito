@@ -26,8 +26,8 @@ export const searchDestination = async (req, res) => {
     });
     const result = response.data;
 
-    if (req.path === "/privateIndex") {
-      res.render('private/privateIndex' , { layout: 'privateLayout',items: result }); 
+    if (req.path === "/private") {
+      res.render('index' , { layout: 'privateLayout',items: result }); 
     } else if (req.path === "/") {
       res.render("index", { items: result });
     } else {
@@ -80,10 +80,10 @@ export const getApiBooking = async (req, res) => {
     });
     const result = response.data.result;
 
-    if (req.path === "/privatePage") {
-      res.render('private/privatePage' , { layout: 'privateLayout',items: result }); 
-    } else if (req.path === "/hotel") {
-      res.render("publicPages/hotel", { items: result });
+    if (req.path === "/hotelprivate") {
+      res.render('hotel' , { layout: 'privateLayout',items: result }); 
+    } else if (req.path === "/hotelpublic") {
+      res.render("hotel", { items: result });
     } else {
       res.status(404).send("Página no encontrada");
     }
@@ -104,10 +104,10 @@ export const getApireviews = async (req, res) => {
     });
     const result = response.data.result;
 
-    if (req.path === "/privatePage") {
-      res.render('private/privatePage' , { layout: 'privateLayout',items: result }); 
+    if (req.path === "/hotelprivate") {
+      res.render('hotel' , { layout: 'privateLayout',items: result }); 
     } else if (req.path === "/hotel") {
-      res.render("publicPages/hotel", { items: result });
+      res.render("hotel", { items: result });
     } else {
       res.status(404).send("Página no encontrada");
     }
@@ -170,7 +170,7 @@ export const detailsApiBooking = async (req, res) => {
     const photos3 = photosArray[2] || {};
 
     if(req.path == `/hotelDetailsPrivate/${hotelId}`){
-      res.render("private/hotelDetailsPrivate", {
+      res.render("hotelDetails", {
          layout: 'privateLayout',
         reviews,
         details,
@@ -180,7 +180,7 @@ export const detailsApiBooking = async (req, res) => {
         descriptionSpanish,
       },);
     } else if (req.path === `/hotelDetails/${hotelId}`) {
-      res.render("publicPages/hotelDetails",  {
+      res.render("hotelDetails",  {
        reviews,
        details,
        photos1,

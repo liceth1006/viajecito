@@ -1,16 +1,15 @@
-<form id="sortForm" action="/hotel" method="get">
-    <select 
-        name="orderBy"
-        id="orderBy"
-        class="form-select" 
-        aria-label="Default select example">
-        <option disabled value="">Ordenar por:</option>
-        <option value="distance">Distancia a un punto de interés</option>
-        <option value="popularity">Popularidad</option>
-        <option value="class_descending">Estrellas (de 5 a 0)</option>
-        <option value="class_ascending">Estrellas (de 0 a 5)</option>
-        <option value="price">Precio (de menor a mayor)</option>
-    </select>
+<form id="sortForm" method="GET">
+  <select 
+      name="orderBy"
+      id="orderBy"
+      class="form-select" 
+      aria-label="Default select example">
+      <option disabled value="">Ordenar por:</option>
+      <option value="distance">Distancia a un punto de interés</option>
+      <option value="popularity">Popularidad</option>
+      <option value="class_descending">Estrellas (de 5 a 0)</option>
+      <option value="class_ascending">Estrellas (de 0 a 5)</option>
+      <option value="price">Precio (de menor a mayor)</option>
+  </select>
 </form>
-
 

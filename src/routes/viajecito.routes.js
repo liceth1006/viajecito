@@ -1,42 +1,50 @@
 import express from "express";
-import { getApiBooking,searchDestination,detailsApiBooking, } from '../controllers/apiBookingController.js';
-import {registerUser,login,logout,profile} from '../controllers/authController.js'
+import {
+  getApiBooking,
+  searchDestination,
+  detailsApiBooking,
+} from "../controllers/apiBookingController.js";
+import {
+  registerUser,
+  login,
+  logout,
+  profile,
+} from "../controllers/authController.js";
 import { requireToken } from "../middlewares/requireToken.js";
-import { checkFavorite, getFavorite, postFavorite } from "../controllers/favoriteController.js";
+import {
+  checkFavorite,
+  getFavorite,
+  postFavorite,
+} from "../controllers/favoriteController.js";
 const router = express.Router();
-
 
 //rutas login,register,logout
 router.post("/login", login);
 router.post("/register", registerUser);
-// Ruta para salir de la sesion
 router.post("/logout", logout);
-// Ruta para mostrar la página de inicio con los hoteles rutas publicas 
- router.get("/", searchDestination);
-  router.get("/hotel", getApiBooking);
+
+// Ruta para mostrar la página de inicio con los hoteles rutas publicas
+router.get("/", searchDestination);
+router.get("/private", searchDestination);
+router.get("/hotelpublic", getApiBooking);
+router.get("/hotelprivate", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
+
+
+
+
+
+
 // Rutas protegidas (requieren autenticación)
 
-
-router.get('/protectedRoute', requireToken, (req, res) => {
+router.get("/protectedRoute", requireToken, (req, res) => {
   try {
     console.log("Ruta protegida accedida");
-    res.status(200).json({ message: 'Acceso a ruta protegida exitoso' });
+    res.status(200).json({ message: "Acceso a ruta protegida exitoso" });
   } catch (error) {
-    console.error('Error en la ruta protegida:', error);
-    res.status(500).send('Error interno del servidor');
-  }
-});
-
-
-router.get('/', (req, res) => {
-  try {
-    console.log("Ruta protegida accedida");
-    res.render("index");
-  } catch (error) {
-    console.error('Error en la ruta protegida:', error);
-    res.status(500).send('Error interno del servidor');
+    console.error("Error en la ruta protegida:", error);
+    res.status(500).send("Error interno del servidor");
   }
 });
 
@@ -44,31 +52,40 @@ router.get('/', (req, res) => {
 
 
 
+// router.get("/", (req, res) => {
+//   try {
+//     console.log("Ruta protegida accedida");
+//     res.render("index");
+//   } catch (error) {
+//     console.error("Error en la ruta protegida:", error);
+//     res.status(500).send("Error interno del servidor");
+//   }
+// });
 
-router.get('/privateIndex', (req, res) => {
-  res.render('private/privateIndex' , { layout: 'privateLayout' }); 
+// router.get("/privateIndex", (req, res) => {
+//   res.render("private/privateIndex", { layout: "privateLayout" });
+// });
+
+router.get("/favoritePublic", (req, res) => {
+  res.render("publicPages/favoritePublic");
 });
 
-router.get('/favoritePublic', (req, res) => {
-  res.render('publicPages/favoritePublic' ); 
+router.get("/bookingPublic", (req, res) => {
+  res.render("publicPages/bookingPublic");
 });
 
-router.get('/bookingPublic', (req, res) => {
-  res.render('publicPages/bookingPublic' ); 
-});
-
-router.get("/profile",requireToken, profile);
+router.get("/profile", requireToken, profile);
 // router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
 
- router.post("/favoritePrivate",requireToken, postFavorite);
+router.post("/favoritePrivate", requireToken, postFavorite);
 
- router.get("/favorite", getFavorite);
-router.post("/checkFavorite",requireToken, checkFavorite);
- router.get("/privatePage", getApiBooking);
+router.get("/favorite", getFavorite);
+router.post("/checkFavorite", requireToken, checkFavorite);
+//  router.get("/privatePage", getApiBooking);
 // router.get("/privateIndex", searchDestination);
 
 // router.get('/favorite', (req, res) => {
-//   res.render('private/favorite' , { layout: 'privateLayout' }); 
+//   res.render('private/favorite' , { layout: 'privateLayout' });
 // });
 
 export default router;
