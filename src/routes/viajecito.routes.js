@@ -30,7 +30,7 @@ router.get("/hotelpublic", getApiBooking);
 router.get("/hotelprivate", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
-
+router.get("/search", searchDestination);
 
 
 
@@ -62,9 +62,7 @@ router.get("/protectedRoute", requireToken, (req, res) => {
 //   }
 // });
 
-// router.get("/privateIndex", (req, res) => {
-//   res.render("private/privateIndex", { layout: "privateLayout" });
-// });
+
 
 router.get("/favoritePublic", (req, res) => {
   res.render("publicPages/favoritePublic");

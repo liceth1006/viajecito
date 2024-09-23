@@ -1,0 +1,23 @@
+<main>
+  <div style="width: 100%;">
+  {{>carousel}}
+  {{>searchDestination}}
+  </div>
+  <div class="container-fluid mt-5 ">
+    <h2 class="text-center">Destinos encontrados</h2>
+    <p> elige el lugar perfecto para explorar y ver los hoteles disponibles.</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+     
+      {{#if items}}
+        {{#each items}}
+         <div class="col">
+          {{> cardSearchDestination}}
+          </div>
+        {{/each}}
+      {{else}}
+        <p>No hay hoteles para mostrar.</p>
+      {{/if}}
+    </div>
+ 
+  </div>
+</main>

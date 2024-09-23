@@ -317,6 +317,7 @@ function viewHotel(hotelId) {
   window.location.href = url;
 }
 
+//corazon favoritos
 document.addEventListener('DOMContentLoaded', function() {
   // Obtiene todos los contenedores de favoritos en todas las tarjetas
   const currentPath = window.location.pathname;
@@ -351,6 +352,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+
+
 
 
 // Función para obtener los favoritos
@@ -445,6 +449,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
+
+// Llama a la función al cargar
+searchDestination();
+
+
+// Llama a la función cuando se carga el documento
+document.addEventListener('DOMContentLoaded', searchDestination);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {

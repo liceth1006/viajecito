@@ -2,14 +2,22 @@
   <form id="FormHotel" method="get">
     <div class="row align-items-center">
       <div class="col-md-3 mb-3 mb-md-0">
-        <div class="input-container">
-             <select class="form-control" id="dest_id" name="dest_id">
-            <option hidden  value="">Seleccione un destino</option>
-            <option value="47">colombia</option>
-            <option value="-595817">Puerto Colombia</option>
-            <option value="88791">Italia</option>
-          </select>
-        </div>
+       <div class="input-container">
+    <input type="text" 
+           placeholder="Seleccione un destino" 
+           class="form-control"
+           list="list" 
+           name="dest_id" 
+           id="dest_id"
+           oninput="updateLabel(this)">
+    <datalist id="list">
+        <option value="47" label="Colombia">colombia</option>
+        <option value="104" label="Italia">
+        <option value="197" label="España">
+        <option value="30" label="Brasil">
+    </datalist>  
+</div>
+
       </div>
       <div class="col-md-2 mb-3 mb-md-0">
         <div class="input-container">
