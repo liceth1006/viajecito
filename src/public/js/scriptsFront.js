@@ -90,8 +90,6 @@ async function accessProtectedRoute() {
   }
 }
 
-
-
 // Función para obtener los datos del usuario y actualizar el botón
 async function updateUserInfo() {
   try {
@@ -274,7 +272,6 @@ async function postFavorite(hotelId, hotelName, photoUrl,city,address, reviewSco
   }
 }
 
-
 // Función para verificar si un hotel está en favoritos
 async function checkFavorite(hotelId) {
   const token = localStorage.getItem('token');
@@ -299,6 +296,25 @@ async function checkFavorite(hotelId) {
   } catch (error) {
     console.error('Error al verificar favorito:', error);
   }
+}
+
+//funcion boton detalles 
+function viewHotel(hotelId) {
+  // Obtener la ruta actual
+  const currentPath = window.location.pathname;
+  
+  // Cambia la redirección según la ruta actual
+  let url;
+  if (currentPath === "/hotelpublic") {
+    url = `/hotelDetails/${hotelId}`; // Redirigir a la ruta pública
+  } else if (currentPath === "/hotelprivate") {
+    url = `/hotelDetailsPrivate/${hotelId}`; // Redirigir a la ruta privada
+  } else {
+    url = `/hotelDetails/${hotelId}`; // Ruta por defecto
+  }
+  
+  // Redirigir a la URL construida
+  window.location.href = url;
 }
 
 
@@ -348,21 +364,52 @@ async function checkFavorite(hotelId) {
   }
 
 // Función para establecer la acción del formulario
-function setFormActionDestination() {
-  const form = document.getElementById('destinationForm');
+function setFormAction(id,pachPublic, pachPrivate) {
+  const form = document.getElementById(id);
   const currentPath = window.location.pathname;
 
-  if (currentPath === "/") {
-    form.action = "/"; 
-  } else if (currentPath === "/private") {
-    form.action = "/private"; 
+  if (currentPath === pachPublic) {
+    form.action = pachPublic; 
+  } else if (currentPath === pachPrivate) {
+    form.action = pachPrivate; 
   }
 
 
 }
 
+//mostrar lo hoteles segun el lugar seleccionado
+document.addEventListener('DOMContentLoaded', function() {
+  // Función para obtener la ruta actual y redirigir
+  function getCurrentPathAndRedirect(destId) {
+    const currentPath = window.location.pathname;
 
+    if (currentPath === '/') {
+      window.location.href = `/hotelpublic?dest_id=${destId}`;
+    } else if (currentPath === '/private') {
+      window.location.href = `/hotelprivate?dest_id=${destId}`;
+    } else {
+      window.location.href = `/hotelpublic?dest_id=${destId}`; // Ruta predeterminada
+    }
+  }
 
+  // Selecciona todos los botones con la clase 'viewHotelsBtn'
+  const viewHotelsBtns = document.querySelectorAll('.viewHotelsBtn');
+
+  // Agrega un evento de clic a cada botón
+  viewHotelsBtns.forEach(function(button) {
+    button.addEventListener('click', function() {
+      // Obtén el dest_id del atributo data-dest-id
+      const destId = button.getAttribute('data-dest-id');
+      const destName = button.getAttribute('data-dest-name');
+      // Guarda el dest_id y destName en el almacenamiento local
+      localStorage.setItem('dest_id', destId);
+      localStorage.setItem('name', destName);
+
+      // Llama a la función para redirigir con el ID del destino
+      getCurrentPathAndRedirect(destId);
+    });
+  });
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -381,7 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
   searchDestination()
   setFormAction()
   
-setFormActionDestination();
+setFormAction('destinationForm',"/","/private");
+setFormAction('FormHotel',"/hotelpublic","/hotelprivate");
   const hotels = document.querySelectorAll('.favorite');
     hotels.forEach((hotel) => {
       const hotelId = hotel.id;

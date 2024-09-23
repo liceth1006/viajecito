@@ -20,23 +20,5 @@
     </div>
   </div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Selecciona todos los botones con la clase 'viewHotelsBtn'
-    const viewHotelsBtns = document.querySelectorAll('.viewHotelsBtn');
 
-    // Agrega un evento de clic a cada botón
-    viewHotelsBtns.forEach(function(button) {
-      button.addEventListener('click', function() {
-        // Obtén el dest_id del atributo data-dest-id
-        const destId = button.getAttribute('data-dest-id');
-        const destName = button.getAttribute('data-dest-name');
-        // Guarda el dest_id en el almacenamiento local
-        localStorage.setItem('dest_id', destId);
-        localStorage.setItem('name', destName);
-        // Redirige a la página de hoteles
-        window.location.href = '/hotel';
-      });
-    });
-  });
-</script>
+
