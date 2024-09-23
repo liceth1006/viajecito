@@ -347,6 +347,22 @@ async function checkFavorite(hotelId) {
     });
   }
 
+// Función para establecer la acción del formulario
+function setFormActionDestination() {
+  const form = document.getElementById('destinationForm');
+  const currentPath = window.location.pathname;
+
+  if (currentPath === "/") {
+    form.action = "/"; 
+  } else if (currentPath === "/private") {
+    form.action = "/private"; 
+  }
+
+
+}
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -364,6 +380,8 @@ document.addEventListener("DOMContentLoaded", () => {
   handleSortForm();
   searchDestination()
   setFormAction()
+  
+setFormActionDestination();
   const hotels = document.querySelectorAll('.favorite');
     hotels.forEach((hotel) => {
       const hotelId = hotel.id;
