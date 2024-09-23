@@ -1,8 +1,8 @@
 import express from "express";
-import { getApiBooking,searchDestination,detailsApiBooking, getApiBookingFavorite} from '../controllers/apiBookingController.js';
+import { getApiBooking,searchDestination,detailsApiBooking, } from '../controllers/apiBookingController.js';
 import {registerUser,login,logout,profile} from '../controllers/authController.js'
 import { requireToken } from "../middlewares/requireToken.js";
-import { getFavorite, postFavorite } from "../controllers/favoriteController.js";
+import { checkFavorite, getFavorite, postFavorite } from "../controllers/favoriteController.js";
 const router = express.Router();
 
 
@@ -15,7 +15,7 @@ router.post("/logout", logout);
  router.get("/", searchDestination);
   router.get("/hotel", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
-
+router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
 // Rutas protegidas (requieren autenticación)
 
 
@@ -58,12 +58,14 @@ router.get('/bookingPublic', (req, res) => {
 });
 
 router.get("/profile",requireToken, profile);
-router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
+// router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
 
-router.post("/favoritePrivate",requireToken, postFavorite);
+// router.post("/favoritePrivate",requireToken, postFavorite);
+router.get("/favorite",requireToken, getFavorite);
+router.post("/checkFavorite",requireToken, checkFavorite);
 router.get("/privatePage", getApiBooking);
 // router.get("/privateIndex", searchDestination);
-router.post("/postFavorite/:hotel_id",requireToken,postFavorite)
+
 
 
 export default router;

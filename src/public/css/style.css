@@ -1,15 +1,26 @@
-
-  html{
-    margin-bottom: 0;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
+}
 
 .body {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   color: #1A1A40;
   background-color: #eeeeee;
-  margin-bottom: 0
+  display: flex;
+  flex-direction: column;
 }
+
+.content {
+  flex: 1; /* Esto hace que el contenido ocupe el espacio disponible */
+}
+
+.footer {
+  background-color: #000d41;
+  padding: 1rem 0;
+}
+
 .logo-link {
   display: flex;
   align-items: center;

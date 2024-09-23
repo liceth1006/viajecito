@@ -200,14 +200,7 @@ function handleSortForm() {
   });
  }
 
-
-
-
-
-
-
-
-
+//funcion buscar destino
 function searchDestination (){
 
   const form = document.getElementById('destinationForm');
@@ -226,7 +219,7 @@ function searchDestination (){
     }
   }
 }
-
+//funcion filtro hoteles
 function searchHotel() {
   const form = document.getElementById('FormHotel');
   const inputDestination = document.querySelector('select[name="dest_id"]');
@@ -271,44 +264,67 @@ function searchHotel() {
   }
 }
 
-
-
-//funcion para guardar favorito
 // Función para guardar favorito
-async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, reviewScore, city, address, grossAmountPerNight) {
+async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, reviewScore, grossAmountPerNight) {
   const token = localStorage.getItem('token');
-  const img = document.getElementById(`img-${hotelId}`);
+  const user = localStorage.getItem('user');
+  console.log(hotelId);
+
 
   try {
-    const response = await fetch('/postFavorite', {
+    const response = await fetch('/favoritePrivate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}` 
       },
       body: JSON.stringify({
+        use_id: user,
         hotel_id: hotelId,
         hotel_name_trans: hotelName,
         max_photo_url: photoUrl,
         review_score_word: reviewScoreWord,
         review_score: reviewScore,
-        city: city,
-        address: address,
-        gross_amount_per_night: grossAmountPerNight
+        amount_unrounded: grossAmountPerNight 
       })
     });
 
+    const data = await response.json();
+    checkFavorite(hotelId)
     if (response.ok) {
-      console.log("Hotel ID:", hotelId);
-      console.log("Agregado a favoritos");
-      img.src = "../img/iconFavorito.png";
+      alertSweet('success', 'Registro exitoso', data.message);
     } else {
-      console.log('Error al agregar favorito');
-      // Mostrar mensaje de error al usuario
+      alertSweet('error', 'Oops...', data.message);
     }
   } catch (error) {
     console.error('Error al agregar favorito:', error);
-    // Mostrar mensaje de error al usuario
+  }
+}
+
+
+// Función para verificar si un hotel está en favoritos
+async function checkFavorite(hotelId) {
+  const token = localStorage.getItem('token');
+   const user = localStorage.getItem('user');
+  try {
+    const response = await fetch('/checkFavorite', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ hotel_id: hotelId, use_id:user  }) 
+    });
+
+    const data = await response.json();
+
+    // Cambia el color o el ícono si está en favoritos
+    if (data.isFavorite) {
+      document.getElementById(`img-${hotelId}`).src = "../img/iconFavorito.png";
+      document.getElementById(hotelId).classList.add('favorite-active'); // Puedes agregar una clase CSS para cambiar el color
+    }
+  } catch (error) {
+    console.error('Error al verificar favorito:', error);
   }
 }
 
@@ -316,13 +332,14 @@ async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, revie
 // Función para obtener los favoritos
 async function getFavorite() {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); 
+    console.log(token)
     if (!token) {
-      console.error('No se encontró el token en el localStorage.');
+      console.error('No se encontró el token de autenticación.');
       return;
     }
 
-    const response = await fetch('/favoritePrivate', {
+    const response = await fetch('/favorite', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -331,76 +348,23 @@ async function getFavorite() {
     });
 
     const data = await response.json();
+    
     if (response.ok) {
-      const container = document.getElementById('hotelsContainer');
-      container.innerHTML = '';
-console.log(data)
-      // if (data.length > 0) {
-      //   data.forEach(hotel => {
-      //     const hotelCard = `
-      //       <div class="card h-100">
-      //         <div class="image-container">
-      //           <img src="${hotel.max_photo_url || ''}" class="card-img-top" alt="${hotel.hotel_name_trans || 'Hotel'}"/>
-      //         </div>
-      //         <div class="card-body">
-      //           <h4 class="card-title">${hotel.hotel_name_trans || 'Nombre del Hotel'}</h4>
-      //           <p class="text-md-end text-success">
-      //             <i class="fa-solid fa-ranking-star"></i>
-      //             ${hotel.review_score_word || 'Sin Calificación'} (${hotel.review_score || '0'})
-      //           </p>
-      //           <div class="row">
-      //             <div class="col-4">
-      //               <p><i class="fa-solid fa-tree-city text-success"></i> ${hotel.city || 'Ciudad'}</p>
-      //             </div>
-      //             <div class="col-8">
-      //               <p><i class="fa-solid fa-location-dot text-primary"></i> ${hotel.address || 'Dirección'}</p>
-      //             </div>
-      //           </div>
-      //           <h4>Precio por noche: ${hotel.composite_price_breakdown?.gross_amount_per_night?.amount_unrounded || 'N/A'}</h4>
-      //           <h4>Precio Total: ${hotel.composite_price_breakdown?.all_inclusive_amount?.amount_rounded || 'N/A'}</h4>
-      //           <p class="card-text mb-0">${hotel.ribbon_text || 'Texto del Rango'}</p>
-      //           <p class="card-text mb-0">Cancelación gratuita: ${hotel.is_free_cancellable ? '<span class="text-success mb-0">Sí</span>' : '<span class="text-danger mb-0">No</span>'}</p>
-      //           <p class="card-text mb-0">Pago por adelantado: ${hotel.cc_required ? '<span class="text-success">Requerido</span>' : '<span class="text-danger">No requerido</span>'}</p>
-      //           <p class="card-text mb-0">Check-in: desde ${hotel.checkin?.from || 'N/A'} hasta ${hotel.checkin?.until || 'N/A'}</p>
-      //           <p class="card-text mb-0">Check-out: desde ${hotel.checkout?.from || 'N/A'} hasta ${hotel.checkout?.until || 'N/A'}</p>
-      //           <div class="d-grid gap-2 col-6 mx-auto mt-2">
-      //             <a href="/hotelDetails/${hotel.hotel_id || ''}" class="button">
-      //               <span>Ver disponibilidad <i class="fa-solid fa-chevron-right"></i></span>
-      //             </a>
-      //           </div>
-      //           <div class="position-absolute top-0 end-0 p-3">
-      //             ${hotel.badges ? hotel.badges.map(badge => `<span class="badge bg-success mb-0">${badge.text}</span>`).join('') : ''}
-      //           </div>
-      //         </div>
-      //         <div id="${hotel.hotel_id}" class="favorite" onclick="postFavorite('${hotel.hotel_id}')">
-      //           <img id="img-${hotel.hotel_id}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
-      //         </div>
-      //       </div>
-      //     `;
-      //     container.innerHTML += hotelCard;
-      //   });
-      // } else {
-      //   container.innerHTML = '<p>No hay favoritos para mostrar.</p>';
-      // }
+      console.log('Favoritos:', data);
+      // Aquí puedes hacer algo con los datos, como mostrarlos en la interfaz
     } else {
-      console.error('Error al obtener la información del usuario:', response.statusText);
+      console.error('Error al obtener los favoritos:', data.error || response.statusText);
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error en la solicitud:', error);
   }
 }
-
-
-
-
-
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
 
   updateUserInfo();
-  getFavorite()
+
 
   // Evento para el botón de logout
   const logoutButton = document.getElementById("confirmLogout");
@@ -411,9 +375,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Llama a la función para manejar el formulario de ordenación
   handleSortForm();
   searchDestination()
+
+  const hotels = document.querySelectorAll('.favorite');
+    hotels.forEach((hotel) => {
+      const hotelId = hotel.id;
+      checkFavorite(hotelId);
+    });
 });
 
-
+getFavorite()
 // Función para manejar errores generales
 function handleError(error) {
   alertSweet('error','Error','Ocurrió un error al intentar iniciar sesión.')

@@ -40,7 +40,7 @@
     <p class="card-text mb-0">Check-in: desde {{checkin.from}} hasta {{checkin.until}}</p>
     <p class="card-text mb-0">Check-out: desde {{checkout.from}} hasta {{checkout.until}}</p>
     <div class="d-grid gap-2 col-6 mx-auto mt-2">
-      <a href="/hotelDetails/{{hotel_id}}" class="btn btn-primary">
+      <a href="/hotelDetailsPrivate/{{hotel_id}}" class="btn btn-primary">
         <span>Ver disponibilidad <i class="fa-solid fa-chevron-right"></i></span>
       </a>
     </div>
@@ -54,9 +54,21 @@
   </div>
 
 <!-- Botón de favorito -->
-<div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}', '{{hotel_name_trans}}', '{{max_photo_url}}', '{{review_score_word}}', {{review_score}}, '{{city}}', '{{address}}', {{gross_amount_per_night}})">
+<div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}', '{{hotel_name_trans}}', '{{max_photo_url}}', '{{review_score_word}}', {{review_score}}, {{gross_amount_per_night}})">
   <img id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
 </div>
 
 </div>
+
+<script>
+  
+  // Al cargar la página, verifica si cada hotel está en favoritos
+  document.addEventListener('DOMContentLoaded', function() {
+    const hotels = document.querySelectorAll('.favorite');
+    hotels.forEach((hotel) => {
+      const hotelId = hotel.id;
+      checkFavorite(hotelId);
+    });
+  });
+</script>
 

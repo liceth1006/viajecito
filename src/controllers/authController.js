@@ -96,7 +96,7 @@ export const logout = async (req,res)=>{
 export const profile = async (req, res) => {
 
   const userId = req.use_id;
-
+console.log(userId)
   try {
     if (!userId) {
       return res.status(400).json({ error: "el use_id es requerido" });

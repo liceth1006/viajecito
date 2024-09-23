@@ -1,110 +1,85 @@
 import pool from "../database/database.js";
 
-export const getFavorite = async (req,res)=>{
+export const getFavorite = async (req, res) => {
   const userId = req.use_id;
+
+  console.log('User ID:', userId);
 
   try {
     if (!userId) {
-      return res.status(400).json({ error: "el use_id es requerido" });
+      return res.status(400).json({ error: "El use_id es requerido" });
     }
 
-   // Buscar los favoritos por ID de usuario
-   const [favorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ?", [userId]);
+    // Buscar los favoritos por ID de usuario
+    const [favorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ?", [userId]);
 
+    // Verifica si se encontraron favoritos
+    if (favorites.length === 0) {
+      return res.status(404).json({ error: "No se encontraron favoritos 😰" });
+    }
 
-   // Verifica si se encontraron favoritos
-   if (favorites.length === 0) {
-    return res.status(404).json({ error: "No se encontraron favoritos 😰" });
-  }
-
-  // Devuelve la lista de favoritos
-  return res.json(favorites);
+    // Renderiza la vista con los datos de los favoritos
+    res.render("private/favorite", { favorito: favorites });
 
   } catch (error) {
     console.error("Error al obtener los favoritos", error);
     return res.status(500).json({ error: "Error del servidor" });
   }
-}
+};
 
-export const postFavorite = async (req,res)=>{
-  try{
-    const  property_id  = req.params.hotel_id;
-    const userId = req.use_id;
 
-    if (!property_id) {
-      return res.status(400).json({ error: "El ID de la propiedad es requerido" });
+
+export const postFavorite = async (req, res) => {
+  try {
+    const { use_id, hotel_id, hotel_name_trans, review_score_word, review_score, max_photo_url, amount_unrounded } = req.body;
+
+    // Comprobar si el favorito ya existe
+    const [existingFavorite] = await pool.query(
+      "SELECT * FROM favorites WHERE use_id = ? AND hotel_id = ?", 
+      [use_id, hotel_id]
+    );
+
+    if (existingFavorite.length > 0) {
+      return res.status(400).json({ message: 'This hotel is already in your favorites.' });
     }
 
-    if (!userId) {
-      return res.status(400).json({ error: "El ID de usuario es requerido" });
-    }
 
     const newFavorite = {
-      use_id : userId,
-      property_id:property_id
+      use_id,
+      hotel_id,
+      hotel_name_trans,
+      review_score_word,
+      review_score,
+      max_photo_url,
+      amount_unrounded
     };
-   // Verificar si el favorito ya existe para evitar duplicados
-   const [existingFavorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ? AND property_id = ?", [userId, property_id]);
 
-   if (existingFavorites.length > 0) {
-     return res.status(400).json({ error: "Este favorito ya existe" });
-   }
+    await pool.query("INSERT INTO favorites SET ?", [newFavorite]);
 
-   // Insertar el nuevo favorito
-   await pool.query("INSERT INTO favorites SET ?", [newFavorite]);
-
-   // Redirigir al usuario 
-   res.status(201).json({ message: "Favorito agregado exitosamente" });
-    res.redirect("/favoritePrivate");
-  }catch(error){
-
+    res.status(200).json({ message: 'Favorite added successfully!' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-}
+};
 
 
-// export const postFavorite = async (req, res) => {
-//   try {
-//     const {
-//       hotel_id,
-//       hotel_name_trans,
-//       max_photo_url,
-//       review_score_word,
-//       review_score,
-//       city,
-//       address,
-//       gross_amount_per_night
-//     } = req.body;
-    
-//     const userId = req.use_id;
-//     if (!hotel_id || !userId) {
-//       return res.status(400).json({ error: "El ID de la propiedad y el ID de usuario son requeridos" });
-//     }
+// Ruta para verificar si un hotel está en favoritos
+export const checkFavorite = async (req, res) => {
+  try {
+    const { use_id, hotel_id } = req.body;
 
-//     const newFavorite = {
-//       use_id: userId,
-//       property_id: hotel_id,
-//       hotel_name_trans,
-//       max_photo_url,
-//       review_score_word,
-//       review_score,
-//       city,
-//       address,
-//       gross_amount_per_night
-//     };
+    // Comprobar si el favorito existe
+    const [existingFavorite] = await pool.query(
+      "SELECT * FROM favorites WHERE use_id = ? AND hotel_id = ?", 
+      [use_id, hotel_id]
+    );
 
-//     // Verificar si el favorito ya existe para evitar duplicados
-//     const [existingFavorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ? AND property_id = ?", [userId, hotel_id]);
+    if (existingFavorite.length > 0) {
+      return res.status(200).json({ isFavorite: true });
+    }
 
-//     if (existingFavorites.length > 0) {
-//       return res.status(400).json({ error: "Este favorito ya existe" });
-//     }
-
-//     // Insertar el nuevo favorito
-//     await pool.query("INSERT INTO favorites SET ?", [newFavorite]);
-
-//     res.status(201).json({ message: "Favorito agregado exitosamente" });
-//   } catch (error) {
-//     console.error('Error al agregar favorito:', error);
-//     res.status(500).json({ error: "Error interno del servidor" });
-//   }
-// }
+    res.status(200).json({ isFavorite: false });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
