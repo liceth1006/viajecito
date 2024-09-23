@@ -317,6 +317,41 @@ function viewHotel(hotelId) {
   window.location.href = url;
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  // Obtiene todos los contenedores de favoritos en todas las tarjetas
+  const currentPath = window.location.pathname;
+
+  // Selecciona todos los botones de favoritos
+  const hotels = document.querySelectorAll('[id^=favoriteBtnContainer]');
+
+  hotels.forEach(hotel => {
+    const hotelId = hotel.id.split('-')[1]; 
+    const hotelName = '{{hotel_name_trans}}';
+    const photoUrl = '{{max_photo_url}}';
+    const city = '{{city}}';
+    const address = '{{address}}';
+    const reviewScoreWord = '{{review_score_word}}';
+    const reviewScore = '{{review_score}}';
+    const pricePerNight = '{{composite_price_breakdown.gross_amount_per_night.amount_unrounded}}';
+
+    if (currentPath === '/hotelprivate') {
+      // Botón para favoritos privados
+      hotel.innerHTML = `
+        <div id="${hotelId}" class="favorite" onclick="postFavorite('${hotelId}', '${hotelName}', '${photoUrl}', '${city}','${address}','${reviewScoreWord}', '${reviewScore}', '${pricePerNight}')">
+          <img id="img-${hotelId}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+        </div>
+      `;
+    } else {
+      // Botón para favoritos públicos
+      hotel.innerHTML = `
+        <a class="favorite" href="/favoritePublic">
+          <img src="../img/iconNoFavorito.png" alt="Favorito" />
+        </a>
+      `;
+    }
+  });
+});
+
 
 // Función para obtener los favoritos
 // async function getFavorite() {

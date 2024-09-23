@@ -58,28 +58,5 @@
       {{/if}}
     </div>
   </div>
-  
-  <a class="favorite" href="/favoritePublic">
-    <img src="../img/iconNoFavorito.png" alt="Favorito" />
-  </a>
+  <div id="favoriteBtnContainer-{{hotel_id}}"></div>
 </div>
-
-<script>
-  function viewHotel(hotelId) {
-    // Obtener la ruta actual
-    const currentPath = window.location.pathname;
-    
-    // Cambia la redirección según la ruta actual
-    let url;
-    if (currentPath === "/hotelpublic") {
-      url = `/hotelDetails/${hotelId}`; // Redirigir a la ruta pública
-    } else if (currentPath === "/hotelprivate") {
-      url = `/hotelDetailsPrivate/${hotelId}`; // Redirigir a la ruta privada
-    } else {
-      url = `/hotelDetails/${hotelId}`; // Ruta por defecto
-    }
-    
-    // Redirigir a la URL construida
-    window.location.href = url;
-  }
-</script>
