@@ -24,13 +24,20 @@ router.post("/register", registerUser);
 router.post("/logout", logout);
 
 // Ruta para mostrar la página de inicio con los hoteles rutas publicas
+router.get("/favoritePublic", (req, res) => {
+  res.render("publicPages/favoritePublic");
+});
+
+router.get("/bookingPublic", (req, res) => {
+  res.render("publicPages/bookingPublic");
+});
+
 router.get("/", searchDestination);
 router.get("/private", searchDestination);
 router.get("/hotelpublic", getApiBooking);
 router.get("/hotelprivate", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
-router.get("/search", searchDestination);
 
 
 
@@ -48,42 +55,9 @@ router.get("/protectedRoute", requireToken, (req, res) => {
   }
 });
 
-
-
-
-
-// router.get("/", (req, res) => {
-//   try {
-//     console.log("Ruta protegida accedida");
-//     res.render("index");
-//   } catch (error) {
-//     console.error("Error en la ruta protegida:", error);
-//     res.status(500).send("Error interno del servidor");
-//   }
-// });
-
-
-
-router.get("/favoritePublic", (req, res) => {
-  res.render("publicPages/favoritePublic");
-});
-
-router.get("/bookingPublic", (req, res) => {
-  res.render("publicPages/bookingPublic");
-});
-
 router.get("/profile", requireToken, profile);
-// router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
-
+router.get("/favoriteShow",requireToken, getFavorite);
 router.post("/favoritePrivate", requireToken, postFavorite);
-
-router.get("/favorite", getFavorite);
-router.post("/checkFavorite", requireToken, checkFavorite);
-//  router.get("/privatePage", getApiBooking);
-// router.get("/privateIndex", searchDestination);
-
-// router.get('/favorite', (req, res) => {
-//   res.render('private/favorite' , { layout: 'privateLayout' });
-// });
+router.post("/checkFavorite", requireToken, checkFavorite)
 
 export default router;

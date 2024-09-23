@@ -188,6 +188,7 @@ function searchDestination (){
     }
   }
 }
+
 //funcion filtro hoteles
 function searchHotel() {
   const form = document.getElementById('FormHotel');
@@ -354,33 +355,52 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
-
 // Función para obtener los favoritos
-// async function getFavorite() {
-//   const token = localStorage.getItem("token");
-//   const user = localStorage.getItem('user');
-//   try {
-//     const response = await fetch('/favorite', {
-//       method: "GET",
-//       headers: {
-//         Authorization: `Bearer ${token}`, 
-//         'Content-Type': 'application/json',
-//       },
-//     });
+async function getFavorites() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.error('Token no encontrado');
+    return;
+  }
 
-//     if (response.ok) {
-      
-//       const data = await response.json();
-//       window.location.href = "/favorite";
-//     } else {
-//       alertSweet('error', 'Oops...', data.error || 'Error al obtener favoritos');
-//     }
-//   } catch (error) {
-//     alertSweet('error', 'Error', 'Error al obtener los favoritos. Inténtalo de nuevo.');
-//   }
-// }
+  try {
+    const response = await fetch('/favoriteShow', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Suponiendo que tienes una sección en tu HTML para mostrar los favoritos
+    console.log(data)
+
+    
+    } else {
+      console.error('Error al obtener los favoritos:', data.error);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+document.getElementById('favoriteLink').addEventListener('click', async function(event) {
+  event.preventDefault();
+  
+  // Aquí podrías cambiar el contenido de la página o redirigir a una sección específica sin recargar la página
+  console.log('Cargando favoritos...');
+
+  await getFavorites();
+
+  // Puedes actualizar el contenido de la página con los favoritos
+  document.getElementById('content').innerHTML = "<h2>Tus favoritos</h2>";
+});
+
+
 
 
   // Función para establecer la acción del formulario
@@ -476,10 +496,9 @@ document.addEventListener('DOMContentLoaded', searchDestination);
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  // getFavorite()
   updateUserInfo();
-
-
+  
+  
   // Evento para el botón de logout
   const logoutButton = document.getElementById("confirmLogout");
   if (logoutButton) {

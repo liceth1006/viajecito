@@ -3,28 +3,25 @@ import pool from "../database/database.js";
 export const getFavorite = async (req, res) => {
   const userId = req.use_id;
 
-  console.log('User ID:', userId);
-  console.log(req);
   try {
     if (!userId) {
-      return res.status(400).json({ error: "El use_id es requerido" });
+      return res.status(400).json({ error: "El user_id es requerido" });
     }
 
-    // Buscar los favoritos por ID de usuario
-    const [favorites] = await pool.query("SELECT * FROM favorites WHERE use_id = ?", [userId]);
+    const [favorites] = await pool.query("SELECT * FROM favorites WHERE user_id = ?", [userId]);
 
-    // Verifica si se encontraron favoritos
     if (favorites.length === 0) {
       return res.status(404).json({ error: "No se encontraron favoritos 😰" });
     }
 
-    // Renderiza la vista con los datos de los favoritos
-    res.render("private/favorite", { layout: 'privateLayout',items: favorites }); 
+    res.json(favorites); 
   } catch (error) {
     console.error("Error al obtener los favoritos", error);
     return res.status(500).json({ error: "Error del servidor" });
   }
 };
+
+
 
 
 
