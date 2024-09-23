@@ -265,10 +265,10 @@ function searchHotel() {
 }
 
 // Función para guardar favorito
-async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, reviewScore, grossAmountPerNight) {
+async function postFavorite(hotelId, hotelName, photoUrl,city,address, reviewScoreWord, reviewScore, amount_unrounded) {
   const token = localStorage.getItem('token');
   const user = localStorage.getItem('user');
-  console.log(hotelId);
+  console.log(amount_unrounded);
 
 
   try {
@@ -283,9 +283,11 @@ async function postFavorite(hotelId, hotelName, photoUrl, reviewScoreWord, revie
         hotel_id: hotelId,
         hotel_name_trans: hotelName,
         max_photo_url: photoUrl,
+        city:city,
+        address:address,
         review_score_word: reviewScoreWord,
         review_score: reviewScore,
-        amount_unrounded: grossAmountPerNight 
+        amount_unrounded: amount_unrounded 
       })
     });
 
@@ -331,38 +333,36 @@ async function checkFavorite(hotelId) {
 
 // Función para obtener los favoritos
 async function getFavorite() {
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem('user');
   try {
-    const token = localStorage.getItem('token'); 
-    console.log(token)
-    if (!token) {
-      console.error('No se encontró el token de autenticación.');
-      return;
-    }
-
     const response = await fetch('/favorite', {
-      method: 'GET',
+      method: "GET",
       headers: {
+        Authorization: `Bearer ${token}`, 
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
       },
     });
 
-    const data = await response.json();
-    
     if (response.ok) {
-      console.log('Favoritos:', data);
-      // Aquí puedes hacer algo con los datos, como mostrarlos en la interfaz
+      
+      const data = await response.json();
+      window.location.href = "/favorite";
     } else {
-      console.error('Error al obtener los favoritos:', data.error || response.statusText);
+      alertSweet('error', 'Oops...', data.error || 'Error al obtener favoritos');
     }
   } catch (error) {
-    console.error('Error en la solicitud:', error);
+    alertSweet('error', 'Error', 'Error al obtener los favoritos. Inténtalo de nuevo.');
   }
 }
 
+// Llama a la función para obtener los favoritos
+getFavorite();
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
-
+  getFavorite()
   updateUserInfo();
 
 
@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-getFavorite()
+
 // Función para manejar errores generales
 function handleError(error) {
   alertSweet('error','Error','Ocurrió un error al intentar iniciar sesión.')

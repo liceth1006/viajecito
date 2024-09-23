@@ -54,7 +54,7 @@
   </div>
 
 <!-- Botón de favorito -->
-<div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}', '{{hotel_name_trans}}', '{{max_photo_url}}', '{{review_score_word}}', {{review_score}}, {{gross_amount_per_night}})">
+<div id="{{hotel_id}}" class="favorite" onclick="postFavorite('{{hotel_id}}', '{{hotel_name_trans}}', '{{max_photo_url}}', '{{city}}','{{address}}','{{review_score_word}}', '{{review_score}}', '{{composite_price_breakdown.gross_amount_per_night.amount_unrounded}}')">
   <img id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
 </div>
 

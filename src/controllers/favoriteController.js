@@ -4,7 +4,7 @@ export const getFavorite = async (req, res) => {
   const userId = req.use_id;
 
   console.log('User ID:', userId);
-
+  console.log(req);
   try {
     if (!userId) {
       return res.status(400).json({ error: "El use_id es requerido" });
@@ -19,8 +19,7 @@ export const getFavorite = async (req, res) => {
     }
 
     // Renderiza la vista con los datos de los favoritos
-    res.render("private/favorite", { favorito: favorites });
-
+    res.render("private/favorite", { layout: 'privateLayout',items: favorites }); 
   } catch (error) {
     console.error("Error al obtener los favoritos", error);
     return res.status(500).json({ error: "Error del servidor" });
@@ -31,7 +30,7 @@ export const getFavorite = async (req, res) => {
 
 export const postFavorite = async (req, res) => {
   try {
-    const { use_id, hotel_id, hotel_name_trans, review_score_word, review_score, max_photo_url, amount_unrounded } = req.body;
+    const { use_id, hotel_id, hotel_name_trans, review_score_word, review_score, max_photo_url,city,address, amount_unrounded } = req.body;
 
     // Comprobar si el favorito ya existe
     const [existingFavorite] = await pool.query(
@@ -51,6 +50,8 @@ export const postFavorite = async (req, res) => {
       review_score_word,
       review_score,
       max_photo_url,
+      city,
+      address,
       amount_unrounded
     };
 

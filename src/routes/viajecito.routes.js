@@ -60,12 +60,15 @@ router.get('/bookingPublic', (req, res) => {
 router.get("/profile",requireToken, profile);
 // router.get("/favoritePrivate",requireToken, getApiBookingFavorite);
 
-// router.post("/favoritePrivate",requireToken, postFavorite);
-router.get("/favorite",requireToken, getFavorite);
+ router.post("/favoritePrivate",requireToken, postFavorite);
+
+ router.get("/favorite", getFavorite);
 router.post("/checkFavorite",requireToken, checkFavorite);
-router.get("/privatePage", getApiBooking);
+ router.get("/privatePage", getApiBooking);
 // router.get("/privateIndex", searchDestination);
 
-
+// router.get('/favorite', (req, res) => {
+//   res.render('private/favorite' , { layout: 'privateLayout' }); 
+// });
 
 export default router;
