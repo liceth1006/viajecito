@@ -1,0 +1,50 @@
+<div class="container search">
+  <form id="FormAttractions" method="get">
+    <div class="row align-items-center">
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="input-container">
+          <input
+            type="text"
+            placeholder="Seleccione un destino"
+            class="form-control"
+            list="list"
+            name="id"
+            id="id"
+          />
+          <datalist id="list">
+            <option value="eyJ1ZmkiOi01Nzg0NzJ9">Colombia - Bogotá</option>
+            <option value="eyJ1ZmkiOi01OTIzMTh9">Medellín</option>
+            <option value="eyJ1ZmkiOi01Nzk5NDN9">Colombia - Cartagena de Indias</option>
+            <option value="eyJ1ZmkiOi02NjY2MTB9">Brazil - Rio de Janeiro</option>
+             <option value="eyJ1ZmkiOi02NjY2MTB9">Estados Unidos - Nueva York</option>
+              <option value="eyJ1ZmkiOi0xNDU2OTI4fQ==">Francia - París</option>
+          </datalist>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3 mb-md-0">
+        <div class="input-container">
+          <i class="fa-solid fa-plane-arrival"></i>
+          <input
+            type="date"
+            class="form-control"
+            id="startDate"
+            name="startDate"
+          />
+        </div>
+      </div>
+      <div class="col-md-3 mb-3 mb-md-0">
+        <div class="input-container">
+          <i class="fa-solid fa-plane-departure"></i>
+          <input type="date" class="form-control" id="endDate" name="endDate" />
+        </div>
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Buscar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

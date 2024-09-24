@@ -1,0 +1,66 @@
+<div class="container my-5 p-4 bg-light shadow rounded">
+  <!-- Título y Ubicación -->
+  <div class="row align-items-center mb-2">
+    <div class="col-md-8">
+      <h3 class="display-5">{{details.name}}</h3>
+      <p class="text-muted">
+        <i class="fa-solid fa-location-dot text-primary"></i>
+        {{details.ufiDetails.bCityName}}
+      </p>
+      <h4>Precio</h4>
+    <p><strong>{{details.representativePrice.currency}} {{details.representativePrice.publicAmount}}</strong></p>
+    
+    </div>
+    <div class="col-md-4 text-md-end">
+      <a href="/bookingPublic" class="btn btn-lg btn-primary">
+        <i class="fa-solid fa-magnifying-glass mx-2"></i>Reservar
+      </a>
+    </div>
+  </div>
+
+  <!-- Galería de imágenes y reseñas -->
+  <div class="row g-4">
+    <!-- Galería de Imágenes -->
+    <div class="col-lg-9">
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <img src="{{photos1.medium}}" alt="Imagen del hotel 1" class="w-100 shadow-sm rounded" style="height: 250px;" />
+          <img src="{{photos2.medium}}" alt="Imagen del hotel 2" class="w-100 mt-3 shadow-sm rounded" style="height: 250px;" />
+        </div>
+        <div class="col-lg-6">
+          <img src="{{photos3.medium}}" alt="Imagen del hotel 3" class="w-100 shadow-sm rounded" style="height: 500px;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Reseñas -->
+    <div class="col-lg-3">
+      <div class="p-3 bg-white shadow-sm rounded h-100">
+        {{>carouselReviews}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Descripción y detalles -->
+  <div class="mt-5">
+    <h4>Descripción</h4>
+    <p>{{#if details.description}}{{details.description}} {{else}}Sin contenido disponible{{/if}}</p>
+    
+    <h4>Accesibilidad</h4>
+    <p>{{#if details.accessibility}} {{details.accessibility}}{{else}}Sin contenido disponible{{/if}}</p>
+    
+    <h4>Información Adicional</h4>
+    <p>{{#if details.additionalInfo}}{{details.additionalInfo}}{{else}}Sin contenido disponible{{/if}}</p>
+    
+    <h4>Restricciones</h4>
+    <p>{{#if details.restrictions}}{{details.restrictions}}{{else}}Sin contenido disponible{{/if}}</p>
+  </div>
+
+  <!-- Mapa -->
+  <div class="mt-5">
+    <iframe width="100%" height="500px" style="border:0;" loading="lazy" allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade" 
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBI5jgmZQB_p68Qge2QgLOaQ-m3mjXJOZk&q={{details.name}}">
+    </iframe>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="card h-100">
+  <div class="image-container">
+    <img src="{{primaryPhoto.small}}" class="card-img-top" alt="{{name}}" />
+  </div>
+  <div class="card-body">
+    <h4 class="card-title">{{name}}</h4>
+    <p class="text-md-end text-success">
+      <i class="fa-solid fa-ranking-star"></i>
+      {{reviewsStats.combinedNumericStats.average}}
+    </p>
+
+    <div class="row">
+      <div class="col-12">
+        <p><i class="fa-solid fa-tree-city text-success"></i>
+          {{ufiDetails.bCityName}}</p>
+      </div>
+
+    </div>
+
+    <h4>Precio:
+      {{representativePrice.currency}}
+      {{representativePrice.publicAmount}}</h4>
+
+    <p class="card-text mb-0">{{shortDescription}}</p>
+  <div class="d-grid gap-2 col-6 mx-auto mt-2">
+    <a href="#" class="btn btn-primary d-flex align-items-center justify-content-center" onclick="viewAttractions('{{slug}}')">
+        <span>Ver Detalles <i class="fa-solid fa-chevron-right"></i></span>
+    </a>
+</div>
+
+
+
+    <div class="position-absolute top-0 end-0 p-3">
+      {{#if badges}}
+        {{#each badges}}
+          <span class="badge bg-success mb-0">{{text}}</span>
+        {{/each}}
+      {{/if}}
+    </div>
+  </div>
+  <div
+    id="favoriteBtnContainer-{{id}}"
+    class="favorite"
+    data-hotel-id="{{id}}"
+    data-hotel-name="{{name}}"
+    data-photo-url="{{primaryPhoto.small}}"
+    data-city="{{ufiDetails.bCityName}}"
+    data-address=""
+    data-review-score-word=""
+    data-review-score="{{reviewsStats.combinedNumericStats.average}}"
+    data-price-per-night="{{representativePrice.currency}} {{representativePrice.publicAmount}}"
+  >
+    <img
+      id="img-{{id}}"
+      src="../img/iconNoFavorito.png"
+      alt="Añadir a favoritos"
+    />
+  </div>
+
+</div>

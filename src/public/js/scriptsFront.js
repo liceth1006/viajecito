@@ -306,7 +306,7 @@ async function checkFavorite(hotelId) {
     // Cambia el color o el ícono si está en favoritos
     if (data.isFavorite) {
       document.getElementById(`img-${hotelId}`).src = "../img/iconFavorito.png";
-      document.getElementById(hotelId).classList.add("favorite-active"); // Puedes agregar una clase CSS para cambiar el color
+      document.getElementById(hotelId).classList.add("favorite-active");
     }
   } catch (error) {
     console.error("Error al verificar favorito:", error);
@@ -321,11 +321,11 @@ function viewHotel(hotelId) {
   // Cambia la redirección según la ruta actual
   let url;
   if (currentPath === "/hotelpublic") {
-    url = `/hotelDetails/${hotelId}`; // Redirigir a la ruta pública
+    url = `/hotelDetails/${hotelId}`; 
   } else if (currentPath === "/hotelprivate") {
-    url = `/hotelDetailsPrivate/${hotelId}`; // Redirigir a la ruta privada
+    url = `/hotelDetailsPrivate/${hotelId}`; 
   } else {
-    url = `/hotelDetails/${hotelId}`; // Ruta por defecto
+    url = `/hotelDetails/${hotelId}`; 
   }
 
   // Redirigir a la URL construida
@@ -560,6 +560,54 @@ function getCurrentPathAndRedirect(destId) {
 }
 
 
+//funcion boton detalles
+function viewAttractions(slug) {
+  // Obtener la ruta actual
+  const currentPath = window.location.pathname;
+
+  // Cambia la redirección según la ruta actual
+  let url;
+  if (currentPath === "/attractionspublic") {
+    url = `/attractionsDetails/${slug}`; 
+  } else if (currentPath === "/attractionsprivate") {
+    url = `/attractionsDetailsPrivate/${slug}`; 
+  } else {
+    url = `/attractionsDetails/${slug}`; 
+  }
+
+  // Redirigir a la URL construida
+  window.location.href = url;
+}
+
+
+//funcion filtro atracciones
+function searchAttractions() {
+  const form = document.getElementById("FormAttractions");
+  const inputDestination = document.querySelector('input[name="id"]');
+  const inputArrival = document.getElementById("startDate");
+  const inputDeparture = document.getElementById("endDate");
+
+  // Verifica si el formulario y los inputs están presentes
+  if (form && inputDestination) {
+    // Obtiene los parámetros de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Asigna los valores de los parámetros a los inputs
+    const destinationValue = urlParams.get("id");
+    const arrivalValue = urlParams.get("startDate");
+    const departureValue = urlParams.get("endDate");
+    // Si hay valores, se los asigna a los inputs
+    if (destinationValue) {
+      inputDestination.value = destinationValue;
+    }
+    if (arrivalValue) {
+      inputArrival.value = arrivalValue;
+    }
+    if (departureValue) {
+      inputDeparture.value = departureValue;
+    }
+  }
+}
 
 
 // Llama a las funciones al cargar el documento

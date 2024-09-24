@@ -17,6 +17,7 @@ import {
   getFavorite,
   postFavorite,
 } from "../controllers/favoriteController.js";
+import { detailsApiAttractions, getApiAttractions } from "../controllers/apiAttractionsController.js";
 const router = express.Router();
 
 //rutas login,register,logout
@@ -33,12 +34,22 @@ router.get("/bookingPublic", (req, res) => {
   res.render("publicPages/bookingPublic");
 });
 
+//hoteles
 router.get("/", searchDestination);
 router.get("/private", searchDestination);
 router.get("/hotelpublic", getApiBooking);
 router.get("/hotelprivate", getApiBooking);
 router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
+
+
+
+//atracciones
+router.get("/attractionspublic", getApiAttractions);
+router.get("/attractionsprivate", getApiAttractions);
+router.get("/attractionsDetails/:slug", detailsApiAttractions);
+router.get("/attractionsDetailsPrivate/:slug", detailsApiAttractions);
+
 
 
 // Rutas protegidas (requieren autenticación)

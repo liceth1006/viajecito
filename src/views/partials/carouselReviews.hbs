@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-center align-items-center">
+  <div id="carouselExample" class="carousel slide bg-primary-subtle h-100" data-bs-ride="carousel">
+    <div class="carousel-inner px-5">
+      {{#each reviews}}
+        <div class="carousel-item {{#if @first}}active{{/if}}">
+          <div class="d-block w-100 text-center pt-5">
+            <h5>{{#if this.numericRating}}{{this.numericRating}}{{else}}N/A{{/if}}</h5>
+            <p>{{#if this.content}}{{this.content}}{{else}}Sin contenido disponible{{/if}}</p>
+            <small>{{#if this.user.name}}{{this.user.name}}{{else}}Anónimo{{/if}}</small>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
