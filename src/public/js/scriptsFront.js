@@ -110,8 +110,21 @@ async function updateUserInfo() {
     const data = await response.json();
 
     if (response.ok) {
-      const userNameElement = document.getElementById("userName");
-      userNameElement.textContent = `${data.use_name} ${data.use_lastname}`;
+      const userNameElements = document.querySelectorAll(".userName");
+      const birthdate = document.querySelector(".birthdate")
+      const email = document.querySelector(".email")
+      // Iterar sobre todos los elementos y actualizar su contenido
+      userNameElements.forEach(element => {
+        element.textContent = `${data.use_name} ${data.use_lastname}`;
+      });
+      // Convertir la fecha de nacimiento a un formato legible
+      const formattedBirthdate = new Date(data.use_birthdate).toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      birthdate.textContent = formattedBirthdate;
+      email.textContent = `${data.use_mail} `;
     } else {
       console.error("Error al obtener la información del usuario:", data.error);
     }
@@ -442,6 +455,7 @@ function renderFavorites(favorites) {
   });
 }
 
+//funcion eliminar favorito
 async function deleteFavorite(favoriteId) {
   const confirmDelete = await Swal.fire({
     title: "¿Estás seguro?",
@@ -544,6 +558,9 @@ function getCurrentPathAndRedirect(destId) {
     window.location.href = `/hotelpublic?dest_id=${destId}`;
   }
 }
+
+
+
 
 // Llama a las funciones al cargar el documento
 document.addEventListener("DOMContentLoaded", () => {
