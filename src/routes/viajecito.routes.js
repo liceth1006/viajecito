@@ -41,9 +41,6 @@ router.get("/hotelDetails/:hotel_id", detailsApiBooking);
 router.get("/hotelDetailsPrivate/:hotel_id", detailsApiBooking);
 
 
-
-
-
 // Rutas protegidas (requieren autenticación)
 
 router.get("/protectedRoute", requireToken, (req, res) => {

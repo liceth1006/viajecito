@@ -1,5 +1,6 @@
 import axios, { Axios } from "axios";
 
+//datos del api 
 const options = {
   method: "GET",
   headers: {
@@ -16,6 +17,7 @@ const option = {
   }
 };
 
+// funcion buscar destino - datos api
 export const searchDestination = async (req, res) => {
   const { name } = req.query;
   const nameLocation = name || "colombia";
@@ -41,6 +43,7 @@ export const searchDestination = async (req, res) => {
   }
 };
 
+// funciom obtener hoteles
 export const getApiBooking = async (req, res) => {
   const {
     orderBy,
@@ -93,32 +96,8 @@ export const getApiBooking = async (req, res) => {
   }
 };
 
-export const getApireviews = async (req, res) => {
-  const hotelId = req.params.hotel_id;
-  
-  const URL_SEARCH_HOTEL = `https://booking-com.p.rapidapi.com/v1/hotels/reviews?sort_type=SORT_MOST_RELEVANT&hotel_id=${hotelId}&locale=es`;
 
-  try {
-    const response = await axios.get(URL_SEARCH_HOTEL, {
-      headers: options.headers,
-    });
-    const result = response.data.result;
-
-    if (req.path === "/hotelprivate") {
-      res.render('hotel' , { layout: 'privateLayout',items: result }); 
-    } else if (req.path === "/hotel") {
-      res.render("hotel", { items: result });
-    } else {
-      res.status(404).send("Página no encontrada");
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("An error occurred");
-  }
-};
-
-
-
+//funcion para mejorar las solicitudes a la api
 const retryRequest = async (url, options, retries = 3) => {
   let attempt = 0;
   while (attempt < retries) {
@@ -141,6 +120,7 @@ const retryRequest = async (url, options, retries = 3) => {
   throw new Error("Max retries exceeded");
 };
 
+//funcion detalles de los hoteles
 export const detailsApiBooking = async (req, res) => {
   const hotelId = req.params.hotel_id;
 

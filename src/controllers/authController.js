@@ -3,6 +3,7 @@ import { hashPassword } from "../utils/hashPassword.js";
 import pool from "../database/database.js";
 import bcrypt from 'bcrypt';
 
+//funcion iniciar sesion
 export const login = async (req, res) => {
   try {
     const { use_mail, use_password } = req.body;
@@ -39,12 +40,12 @@ export const login = async (req, res) => {
   }
 };
 
-
+//funcion para registrar usuario
 export const registerUser = async (req, res) => {
   try {
     const { use_mail, use_password, use_name, use_lastname, use_birthdate } = req.body;
     
-    // Validación de entrada
+   
     if (!use_mail || !use_password || !use_name || !use_lastname || !use_birthdate) {
       return res.status(400).json({ error: "Todos los campos son requeridos" });
     }
@@ -58,7 +59,6 @@ export const registerUser = async (req, res) => {
     // Cifrar la contraseña antes de guardarla
     const hashedPassword = await hashPassword(use_password);
 
-    // Crear un nuevo usuario
     const newUser = {
       use_mail,
       use_password: hashedPassword, 
@@ -88,11 +88,13 @@ export const registerUser = async (req, res) => {
   }
 };
 
+//funcion cerrar sesion
 export const logout = async (req,res)=>{
   res.clearCookie("refreshToken");
   res.json({ ok: true });
 }
 
+// Funcion para el perfil
 export const profile = async (req, res) => {
 
   const userId = req.use_id;
