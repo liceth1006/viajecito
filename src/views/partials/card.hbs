@@ -58,5 +58,18 @@
       {{/if}}
     </div>
   </div>
-  <div id="favoriteBtnContainer-{{hotel_id}}"></div>
+  <!-- Botón de favorito -->
+<div id="favoriteBtnContainer-{{hotel_id}}" 
+     class="favorite" 
+     data-hotel-id="{{hotel_id}}"
+     data-hotel-name="{{hotel_name_trans}}"
+     data-photo-url="{{max_photo_url}}"
+     data-city="{{city}}"
+     data-address="{{address}}"
+     data-review-score-word="{{review_score_word}}"
+     data-review-score="{{review_score}}"
+     data-price-per-night="{{composite_price_breakdown.gross_amount_per_night.amount_unrounded}}">
+  <img id="img-{{hotel_id}}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+</div>
+
 </div>

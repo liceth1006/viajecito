@@ -13,6 +13,7 @@ import {
 import { requireToken } from "../middlewares/requireToken.js";
 import {
   checkFavorite,
+  deleteFavorite,
   getFavorite,
   postFavorite,
 } from "../controllers/favoriteController.js";
@@ -55,9 +56,19 @@ router.get("/protectedRoute", requireToken, (req, res) => {
   }
 });
 
+router.get("/favorite", (req, res) => {
+  try {
+    res.render('private/favorite' , { layout: 'privateLayout' }); 
+  } catch (error) {
+    console.error("Error en la ruta protegida:", error);
+    res.status(500).send("Error interno del servidor");
+  }
+});
+
 router.get("/profile", requireToken, profile);
 router.get("/favoriteShow",requireToken, getFavorite);
 router.post("/favoritePrivate", requireToken, postFavorite);
 router.post("/checkFavorite", requireToken, checkFavorite)
+router.delete("/delete/:id", deleteFavorite);
 
 export default router;

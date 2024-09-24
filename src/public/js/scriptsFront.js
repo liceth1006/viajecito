@@ -320,21 +320,18 @@ function viewHotel(hotelId) {
 
 //corazon favoritos
 document.addEventListener('DOMContentLoaded', function() {
-  // Obtiene todos los contenedores de favoritos en todas las tarjetas
   const currentPath = window.location.pathname;
-
-  // Selecciona todos los botones de favoritos
   const hotels = document.querySelectorAll('[id^=favoriteBtnContainer]');
 
   hotels.forEach(hotel => {
-    const hotelId = hotel.id.split('-')[1]; 
-    const hotelName = '{{hotel_name_trans}}';
-    const photoUrl = '{{max_photo_url}}';
-    const city = '{{city}}';
-    const address = '{{address}}';
-    const reviewScoreWord = '{{review_score_word}}';
-    const reviewScore = '{{review_score}}';
-    const pricePerNight = '{{composite_price_breakdown.gross_amount_per_night.amount_unrounded}}';
+    const hotelId = hotel.getAttribute('data-hotel-id');
+    const hotelName = hotel.getAttribute('data-hotel-name');
+    const photoUrl = hotel.getAttribute('data-photo-url');
+    const city = hotel.getAttribute('data-city');
+    const address = hotel.getAttribute('data-address');
+    const reviewScoreWord = hotel.getAttribute('data-review-score-word');
+    const reviewScore = hotel.getAttribute('data-review-score');
+    const pricePerNight = hotel.getAttribute('data-price-per-night');
 
     if (currentPath === '/hotelprivate') {
       // Botón para favoritos privados
@@ -355,30 +352,26 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
 // Función para obtener los favoritos
 async function getFavorites() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    console.error('Token no encontrado');
-    return;
-  }
+  console.log("Obteniendo favoritos...");
+  const token = localStorage.getItem('token'); 
 
   try {
     const response = await fetch('/favoriteShow', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}` // Pasa el token en el encabezado
       }
     });
 
     const data = await response.json();
 
     if (response.ok) {
-      // Suponiendo que tienes una sección en tu HTML para mostrar los favoritos
-    console.log(data)
-
-    
+      console.log('Favoritos obtenidos:', data);
+      renderFavorites(data); // Muestra los favoritos en el DOM
     } else {
       console.error('Error al obtener los favoritos:', data.error);
     }
@@ -387,18 +380,91 @@ async function getFavorites() {
   }
 }
 
-
-document.getElementById('favoriteLink').addEventListener('click', async function(event) {
-  event.preventDefault();
+// Función para mostrar los favoritos en el DOM
+function renderFavorites(favorites) {
+  const favoritesContainer = document.getElementById('favoritesContainer');
   
-  // Aquí podrías cambiar el contenido de la página o redirigir a una sección específica sin recargar la página
-  console.log('Cargando favoritos...');
+  if (!favoritesContainer) {
+    console.error('El contenedor de favoritos no existe en el DOM.');
+    return;
+  }
 
-  await getFavorites();
+  favoritesContainer.innerHTML = ''; // Limpia cualquier contenido previo
 
-  // Puedes actualizar el contenido de la página con los favoritos
-  document.getElementById('content').innerHTML = "<h2>Tus favoritos</h2>";
-});
+  favorites.forEach(favorite => {
+    const favoriteItem = document.createElement('div');
+    favoriteItem.classList.add('col'); // Clase para las columnas de Bootstrap
+
+    favoriteItem.innerHTML = `
+      <div class="card mb-3 h-100" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img
+              src="${favorite.max_photo_url}"
+              class="img-fluid rounded-start"
+              alt="Imagen del hotel ${favorite.hotel_name_trans}"
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">${favorite.hotel_name_trans}</h5>
+              <p class="text-md-end text-success">
+                <i class="fa-solid fa-ranking-star"></i>
+                ${favorite.reviewScoreWord} (${favorite.reviewScore})
+              </p>
+              <div class="row">
+                <div class="col-4">
+                  <p><i class="fa-solid fa-tree-city text-success"></i> ${favorite.city}</p>
+                </div>
+                <div class="col-8">
+                  <p><i class="fa-solid fa-location-dot text-primary"></i> ${favorite.address}</p>
+                </div>
+              </div>
+              <h5>Precio por noche: ${favorite.amount_unrounded}</h5>
+            </div>
+           <div class="position-absolute top-0 end-0 button-10">
+  <a href="/delete/${favorite.favorites_id}" class="btn btn-danger p-2" 
+     onclick="return confirm('¿Estás seguro de que deseas eliminar este favorito?');">
+    <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
+  </a>
+</div>
+          </div>
+          
+        </div>
+
+       
+      </div>
+    `;
+
+    // Agregar la card al contenedor de favoritos
+    favoritesContainer.appendChild(favoriteItem);
+  });
+}
+
+async function deleteFavorite(favoriteId) {
+  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este favorito?');
+  if (!confirmDelete) return;
+
+  try {
+    const response = await fetch(`/delete/${favoriteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      // Aquí puedes agregar lógica para actualizar la interfaz, como eliminar el elemento de la lista
+      alert('Favorite deleted successfully!');
+      location.reload(); // Recarga la página o actualiza la lista
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message}`);
+    }
+  } catch (error) {
+    alert('Error al intentar eliminar el favorito. Inténtalo de nuevo más tarde.');
+  }
+}
 
 
 
@@ -497,7 +563,7 @@ document.addEventListener('DOMContentLoaded', searchDestination);
 
 document.addEventListener("DOMContentLoaded", () => {
   updateUserInfo();
-  
+  getFavorites()
   
   // Evento para el botón de logout
   const logoutButton = document.getElementById("confirmLogout");
