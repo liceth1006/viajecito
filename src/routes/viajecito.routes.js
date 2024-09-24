@@ -17,6 +17,12 @@ import {
   getFavorite,
   postFavorite,
 } from "../controllers/favoriteController.js";
+import {
+  getReservation,
+  postReservation,
+  deleteReservation,
+} from "../controllers/reservationController.js";
+
 import { detailsApiAttractions, getApiAttractions } from "../controllers/apiAttractionsController.js";
 const router = express.Router();
 
@@ -86,5 +92,11 @@ router.get("/favoriteShow",requireToken, getFavorite);
 router.post("/favoritePrivate", requireToken, postFavorite);
 router.post("/checkFavorite", requireToken, checkFavorite)
 router.delete("/delete/:id", deleteFavorite);
+
+
+router.get("/reservationShow",requireToken, getReservation);
+router.post("/reservation", requireToken, postReservation);
+router.delete("/deleteReservation/:id", deleteReservation);
+
 
 export default router;
