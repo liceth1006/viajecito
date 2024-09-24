@@ -26,7 +26,6 @@ export const getFavorite = async (req, res) => {
 export const postFavorite = async (req, res) => {
   try {
     const { use_id, hotel_id, hotel_name_trans, review_score_word, review_score, max_photo_url,city,address, amount_unrounded } = req.body;
-
     const [existingFavorite] = await pool.query(
       "SELECT * FROM favorites WHERE use_id = ? AND hotel_id = ?", 
       [use_id, hotel_id]

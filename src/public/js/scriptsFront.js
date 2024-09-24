@@ -39,7 +39,6 @@ async function registerUser(event) {
     use_lastname: document.getElementById("use_lastname").value,
     use_birthdate: document.getElementById("use_birthdate").value,
   };
-  console.log(formData);
   try {
     const response = await fetch("/register", {
       method: "POST",
@@ -159,13 +158,14 @@ async function handleLogout() {
   }
 }
 
+
 // Función para manejar el formulario de ordenación
-function handleSortForm() {
-  const form = document.getElementById("sortForm");
-  const select = document.getElementById("orderBy");
+function handleSortForm(idForm,idOrder) {
+  const form = document.getElementById(idForm);
+  const select = document.getElementById(idOrder);
   if (form && select) {
     const urlParams = new URLSearchParams(window.location.search);
-    const orderBy = urlParams.get("orderBy");
+    const orderBy = urlParams.get(idOrder);
 
     if (orderBy) {
       select.value = orderBy;
@@ -253,7 +253,7 @@ async function postFavorite(
 ) {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
-  console.log(amount_unrounded);
+  console.log(hotelId);
 
   try {
     const response = await fetch("/favoritePrivate", {
@@ -332,7 +332,7 @@ function viewHotel(hotelId) {
   window.location.href = url;
 }
 
-//corazon favoritos
+//corazon favoritos hotel
 function favoriteHeart () {
   const currentPath = window.location.pathname;
   const hotels = document.querySelectorAll("[id^=favoriteBtnContainer]");
@@ -386,8 +386,7 @@ async function getFavorites() {
     const data = await response.json();
 
     if (response.ok) {
-      console.log("Favoritos obtenidos:", data);
-      renderFavorites(data); // Muestra los favoritos en el DOM
+      renderFavorites(data); 
     } else {
       console.error("Error al obtener los favoritos:", data.error);
     }
@@ -609,16 +608,62 @@ function searchAttractions() {
   }
 }
 
+//corazon favoritos atracciones
+function favoriteHeartAttractiones () {
+  const currentPath = window.location.pathname;
+  const hotels = document.querySelectorAll("[id^=favoriteBtnAttractions]");
+
+  hotels.forEach((hotel) => {
+    const hotelId = hotel.getAttribute("data-hotel-id");
+    const hotelName = hotel.getAttribute("data-hotel-name");
+    const photoUrl = hotel.getAttribute("data-photo-url");
+    const city = hotel.getAttribute("data-city");
+    const address = hotel.getAttribute("data-address");
+    const reviewScoreWord = hotel.getAttribute("data-review-score-word");
+    const reviewScore = hotel.getAttribute("data-review-score");
+    const pricePerNight = hotel.getAttribute("data-price-per-night");
+    if (currentPath === "/attractionsprivate") {
+      // Botón para favoritos privados
+      hotel.innerHTML = `
+      <div class="position-absolute top-0 end-0 button-10">
+        <div id="${hotelId}" class="favorite p-2" onclick="postFavorite('${hotelId}', '${hotelName}', '${photoUrl}', '${city}','${address}','${reviewScoreWord}', '${reviewScore}', '${pricePerNight}')">
+          <img id="img-${hotelId}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+        </div>
+        </div>
+      `;
+    } else {
+      // Botón para favoritos públicos
+      hotel.innerHTML = `
+       <div class="position-absolute top-0 end-0 button-10">
+    <a class="favorite  p-2"  href="/favoritePublic">
+          <img src="../img/iconNoFavorito.png" alt="Favorito" />
+        </a>
+</div>
+      `;
+    }
+  });
+};
+
+
+
+
+
+
+
+
+
 
 // Llama a las funciones al cargar el documento
 document.addEventListener("DOMContentLoaded", () => {
   updateUserInfo();
   getFavorites();
   searchDestination();
-  handleSortForm();
+  handleSortForm("sortForm","orderBy")
+  handleSortForm("sorAtttactionsForm","orderAtttactionsBy")
   setFormAction("destinationForm", "/", "/private");
   setFormAction("FormHotel", "/hotelpublic", "/hotelprivate");
   favoriteHeart()
+  favoriteHeartAttractiones()
   // Evento para el botón de logout
   const logoutButton = document.getElementById("confirmLogout");
   if (logoutButton) {

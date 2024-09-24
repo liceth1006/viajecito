@@ -7,7 +7,7 @@ export const generateToken = (userId) => {
     throw new Error('JWT_SECRET not defined');
   }
   const token = jwt.sign({ use_id: userId }, 'SflKxwRJSMeKKF2QT4fwpa', { expiresIn: 9000 });
-  console.log("este es t",token)
+  
   return { token, expiresIn: 9000 };
 };
 

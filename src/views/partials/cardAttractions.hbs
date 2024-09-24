@@ -3,7 +3,7 @@
     <img src="{{primaryPhoto.small}}" class="card-img-top" alt="{{name}}" />
   </div>
   <div class="card-body">
-    <h4 class="card-title">{{name}}</h4>
+    <h4 class="card-title">{{name}} {{id}}</h4>
     <p class="text-md-end text-success">
       <i class="fa-solid fa-ranking-star"></i>
       {{reviewsStats.combinedNumericStats.average}}
@@ -39,7 +39,7 @@
     </div>
   </div>
   <div
-    id="favoriteBtnContainer-{{id}}"
+    id="favoriteBtnAttractions-{{id}}"
     class="favorite"
     data-hotel-id="{{id}}"
     data-hotel-name="{{name}}"

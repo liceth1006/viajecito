@@ -6,7 +6,6 @@ export const requireToken = (req, res, next) => {
   try {
     // Obtener el token del encabezado de autorización
     let token = req.headers?.authorization;
-console.log("verificacion",token)
     if (!token) {
       // Si no se proporciona el token, lanzar un error
       throw new Error('No Bearer');

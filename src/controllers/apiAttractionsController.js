@@ -24,8 +24,9 @@ export const getApiAttractions = async (req, res) => {
   endDate || checkinDateObj.toISOString().split("T")[0];
 
   const order_By = sortBy || "trending";
-  const checkin = startDate || formattedDate;
-  const checkout = endDate || formattedCheckoutDate;  
+const checkin = startDate || formattedDate;
+const checkout = endDate || formattedCheckoutDate;
+
   const destId = id || "eyJ1ZmkiOjIwMDgwNjM0fQ==";
 
   const URL_SEARCH_ATRACTIONS = `https://booking-com15.p.rapidapi.com/api/v1/attraction/searchAttractions?id=${destId}&startDate=${checkin}&endDate=${checkout}&sortBy=${order_By}&currency_code=COP&languagecode=es`;

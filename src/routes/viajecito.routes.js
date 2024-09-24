@@ -56,7 +56,6 @@ router.get("/attractionsDetailsPrivate/:slug", detailsApiAttractions);
 
 router.get("/protectedRoute", requireToken, (req, res) => {
   try {
-    console.log("Ruta protegida accedida");
     res.status(200).json({ message: "Acceso a ruta protegida exitoso" });
   } catch (error) {
     console.error("Error en la ruta protegida:", error);
