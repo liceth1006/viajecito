@@ -336,16 +336,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentPath === '/hotelprivate') {
       // Botón para favoritos privados
       hotel.innerHTML = `
-        <div id="${hotelId}" class="favorite" onclick="postFavorite('${hotelId}', '${hotelName}', '${photoUrl}', '${city}','${address}','${reviewScoreWord}', '${reviewScore}', '${pricePerNight}')">
+      <div class="position-absolute top-0 end-0 button-10">
+        <div id="${hotelId}" class=" p-2" onclick="postFavorite('${hotelId}', '${hotelName}', '${photoUrl}', '${city}','${address}','${reviewScoreWord}', '${reviewScore}', '${pricePerNight}')">
           <img id="img-${hotelId}" src="../img/iconNoFavorito.png" alt="Añadir a favoritos" />
+        </div>
         </div>
       `;
     } else {
       // Botón para favoritos públicos
       hotel.innerHTML = `
-        <a class="favorite" href="/favoritePublic">
+       <div class="position-absolute top-0 end-0 button-10">
+    <a class="  p-2"  href="/favoritePublic">
           <img src="../img/iconNoFavorito.png" alt="Favorito" />
         </a>
+</div>
       `;
     }
   });
@@ -363,7 +367,7 @@ async function getFavorites() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Pasa el token en el encabezado
+        'Authorization': `Bearer ${token}`
       }
     });
 
@@ -389,12 +393,10 @@ function renderFavorites(favorites) {
     return;
   }
 
-  favoritesContainer.innerHTML = ''; // Limpia cualquier contenido previo
-
+  favoritesContainer.innerHTML = ''; 
   favorites.forEach(favorite => {
     const favoriteItem = document.createElement('div');
-    favoriteItem.classList.add('col'); // Clase para las columnas de Bootstrap
-
+    favoriteItem.classList.add('col');
     favoriteItem.innerHTML = `
       <div class="card mb-3 h-100" style="max-width: 540px;">
         <div class="row g-0">
@@ -422,11 +424,11 @@ function renderFavorites(favorites) {
               </div>
               <h5>Precio por noche: ${favorite.amount_unrounded}</h5>
             </div>
-           <div class="position-absolute top-0 end-0 button-10">
-  <a href="/delete/${favorite.favorites_id}" class="btn btn-danger p-2" 
-     onclick="return confirm('¿Estás seguro de que deseas eliminar este favorito?');">
-    <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
-  </a>
+           <div class="position-absolute top-0 end-0 ">
+  <button class="btn  p-2" 
+            onclick="deleteFavorite(${favorite.favorites_id})">
+            <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
+          </button>
 </div>
           </div>
           
@@ -442,8 +444,18 @@ function renderFavorites(favorites) {
 }
 
 async function deleteFavorite(favoriteId) {
-  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este favorito?');
-  if (!confirmDelete) return;
+  const confirmDelete = await Swal.fire({
+    title: '¿Estás seguro?',
+    text: 'Esta acción eliminará este favorito permanentemente.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  });
+
+  if (!confirmDelete.isConfirmed) return; // Solo proceder si el usuario confirma
 
   try {
     const response = await fetch(`/delete/${favoriteId}`, {
@@ -454,17 +466,32 @@ async function deleteFavorite(favoriteId) {
     });
 
     if (response.ok) {
-      // Aquí puedes agregar lógica para actualizar la interfaz, como eliminar el elemento de la lista
-      alert('Favorite deleted successfully!');
-      location.reload(); // Recarga la página o actualiza la lista
+      await Swal.fire({
+        icon: 'success',
+        title: 'Favorito eliminado',
+        text: 'El favorito ha sido eliminado exitosamente.',
+        confirmButtonText: 'Aceptar'
+      });
+      location.reload(); 
     } else {
       const errorData = await response.json();
-      alert(`Error: ${errorData.message}`);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al eliminar',
+        text: `Ocurrió un error: ${errorData.message}`,
+        confirmButtonText: 'Aceptar'
+      });
     }
   } catch (error) {
-    alert('Error al intentar eliminar el favorito. Inténtalo de nuevo más tarde.');
+    Swal.fire({
+      icon: 'error',
+      title: 'Error inesperado',
+      text: 'Error al intentar eliminar el favorito. Inténtalo de nuevo más tarde.',
+      confirmButtonText: 'Aceptar'
+    });
   }
 }
+
 
 
 

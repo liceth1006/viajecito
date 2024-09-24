@@ -84,11 +84,11 @@ export const checkFavorite = async (req, res) => {
 
 export const deleteFavorite = async (req, res) => {
   try {
-    const { id } = req.params; // Obtén el ID del favorito a eliminar desde los parámetros de la solicitud
+    const { id } = req.params;
 
     // Verifica si el favorito existe
     const [existingFavorite] = await pool.query(
-      "SELECT * FROM favorites WHERE id = ?", 
+      "SELECT * FROM favorites WHERE favorites_id = ?", 
       [id]
     );
 
@@ -96,11 +96,9 @@ export const deleteFavorite = async (req, res) => {
       return res.status(404).json({ message: 'Favorite not found.' });
     }
 
-    // Elimina el favorito
-    await pool.query("DELETE FROM favorites WHERE id = ?", [id]);
+    await pool.query("DELETE FROM favorites WHERE favorites_id = ?", [id]);
     
     res.status(200).json({ message: 'Favorite deleted successfully!' });
-    res.redirect("/private/favorite");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
