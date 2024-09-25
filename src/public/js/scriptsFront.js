@@ -240,6 +240,45 @@ function searchHotel() {
   }
 }
 
+async function registerReservation(event) {
+  event.preventDefault();
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
+
+  const formData = {
+    user_id: user,
+    property_id: document.getElementById("property_id").value,
+    check_in_date: document.getElementById("check_in_date").value,
+    check_out_date: document.getElementById("check_out_date").value,
+    total_price: 80000,
+  };
+  try {
+    const response = await fetch("/reservation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alertSweet("success", "Registro exitoso", data.message);
+      document.getElementById("reservationForm").reset();
+    } else {
+      alertSweet("error", "Oops...", data.error);
+    }
+  } catch (error) {
+    alertSweet(
+      "error",
+      "Error",
+      "Error al registrar el usuario. Inténtalo de nuevo."
+    );
+  }
+}
+
 // Función para guardar favorito
 async function postFavorite(
   hotelId,

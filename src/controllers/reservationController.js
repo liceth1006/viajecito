@@ -26,13 +26,32 @@ export const getReservation = async (req, resizeBy) => {
 export const postReservation = async (req, res) => {
   try {
     const { user_id, property_id, check_in_date, check_out_date, total_price } = req.body;
-    const newReservation = { user_id, property_id, check_in_date, check_out_date, total_price};
+    
+   
+    if (!user_id || !property_id || !check_in_date || !check_out_date || !total_price) {
+      return res.status(400).json({ error: "Todos los campos son requeridos" });
+    }
 
-    await pool.query("INSERT INTO reservation (user_id, property_id, check_in_date, check_out_date, total_price) VALUES (?, ?, ?, ?, ?)",[user_id, property_id, check_in_date, check_out_date, total_price]);
+    const newReservation = { 
+      user_id, 
+      property_id, 
+      check_in_date, 
+      check_out_date, 
+      total_price
+    };
 
-    res.status(200).json({ message: '¡Reservacion agregada con éxito!' });
+    // Guardar el usuario en la base de datos
+    const [result] = await pool.query(
+      "INSERT INTO reservation (user_id, property_id, check_in_date, check_out_date, total_price) VALUES (?, ?, ?, ?, ?)",
+      [newReservation.user_id, newReservation.property_id, newReservation.check_in_date, newReservation.check_out_date, newReservation.total_price]
+    );
+
+    // Enviar la respuesta con los tokens
+    return res.status(200).json({ message: '¡Reservacion agregada con éxito!' });
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   }
 };
 
