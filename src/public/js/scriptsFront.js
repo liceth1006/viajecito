@@ -476,6 +476,9 @@ function viewHotel(hotelId) {
   window.location.href = url;
 }
 
+
+
+
 //corazon favoritos hotel
 function favoriteHeart () {
   const currentPath = window.location.pathname;
@@ -512,6 +515,33 @@ function favoriteHeart () {
     }
   });
 };
+
+// Botón reserva
+function buttonReservation() {
+  const currentPath = window.location.pathname;
+  const hotels = document.querySelectorAll("[id^=btnreservation]");
+
+  hotels.forEach((hotel) => {
+    const hotelId = hotel.getAttribute("data-hotel-id");
+
+    if (currentPath === `/hotelDetailsPrivate/${hotelId}`) {
+      // Botón para favoritos privados
+      hotel.innerHTML = `
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal">
+          <i class="fa-solid fa-magnifying-glass mx-2"></i>Reservar
+        </button>
+      `;
+    } else {
+      // Botón para favoritos públicos
+      hotel.innerHTML = `
+        <a class="btn btn-primary" href="/bookingPublic">
+          <i class="fa-solid fa-magnifying-glass mx-2"></i>Reservar
+        </a>
+      `;
+    }
+  });
+};
+
 
 // Función para obtener los favoritos
 async function getFavorites() {
@@ -803,6 +833,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getFavorites();
   getReservation();
   searchDestination();
+  buttonReservation()
   handleSortForm("sortForm","orderBy")
   handleSortForm("sorAtttactionsForm","orderAtttactionsBy")
   setFormAction("destinationForm", "/", "/private");

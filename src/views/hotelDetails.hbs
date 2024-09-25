@@ -7,11 +7,9 @@
         {{details.address}}
       </p>
     </div>
-    <div class="col-md-4 d-grid">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal">
-        <i class="fa-solid fa-magnifying-glass mx-2"></i>Reservar
-      </button>
-    </div>
+    <div class="col-md-4 d-grid" data-hotel-id="{{details.hotel_id}}" id="btnreservation-{{details.hotel_id}}">
+</div>
+
   </div>
   
   <div class="lightbox">
