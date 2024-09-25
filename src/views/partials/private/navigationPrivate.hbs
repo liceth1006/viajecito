@@ -63,16 +63,13 @@
                 <i class="fa-solid fa-circle-user mx-2"></i>Perfil
               </a>
             </li>
-              <li></li>
-              <button
-                type="button"
+              <li>
+                <button type="button" 
                 class="nav-link text-black"
-                style="display: flex; align-items: center; "
-                data-bs-toggle="modal"
-                data-bs-target="#profileModal"
-              >
-                <i class="fa-solid fa-book  mx-2"></i>Mis reservas
-              </button>
+                data-bs-toggle="modal" 
+                data-bs-target="#myReservationsModal">
+                  <i class="fa-solid fa-book  mx-2"></i>Mis reservas
+                </button>
             </li>
             <li>
               <button
@@ -95,3 +92,22 @@
   </div>
 {{>private/modalLogout}}
 </nav>
+<!-- Modal -->
+  <div class="modal fade" id="myReservationsModal" tabindex="-1" aria-labelledby="myReservationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myReservationsModalLabel">Mis Reservas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div  class="container my-5 p-5">
+            <h2>Mis Reservas</h2>
+            <div id="reservationContainer" class="row row-cols-1 row-cols-md-2 g-4 h-100 ">
+              <!-- Aquí se mostrarán las reservas -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

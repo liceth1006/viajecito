@@ -2,7 +2,7 @@ import pool from "../database/database.js";
 
 //Funcion obtener reservas
 export const getReservation = async (req, res) => {
-  const userID = req.user_id;
+  const userID = req.use_id;
 
   try {
     if (!userID) {
