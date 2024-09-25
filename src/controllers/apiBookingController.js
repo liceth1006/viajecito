@@ -4,7 +4,7 @@ import axios, { Axios } from "axios";
 const options = {
   method: "GET",
   headers: {
-    "x-rapidapi-key": "2e4ea804a6msh876e8d7cbc02136p1ae322jsnce088a076e3c",
+    "x-rapidapi-key": "293fcda454msh923b527ff9d7033p1c8c32jsn39fba2b26563",
     "x-rapidapi-host": "booking-com.p.rapidapi.com",
   },
 };
@@ -12,7 +12,7 @@ const options = {
 const option = {
   method: 'GET',
   headers: {
-    'x-rapidapi-key': '2e4ea804a6msh876e8d7cbc02136p1ae322jsnce088a076e3c',
+    'x-rapidapi-key': '293fcda454msh923b527ff9d7033p1c8c32jsn39fba2b26563',
     'x-rapidapi-host': 'booking-com.p.rapidapi.com'
   }
 };
