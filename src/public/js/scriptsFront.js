@@ -314,18 +314,20 @@ function renderReservation(reservations) {
 
   reservationContainer.innerHTML = "";
   reservations.forEach((reservation) => {
-    const reservationItem = document.createElement("div");
-    reservationItem.classList.add("col");
+    const reservationItem = document.createElement("tr");
     reservationItem.innerHTML = `
-      <p>${reservation.property_id}</p>
-      <p>${reservation.check_in_date}</p>
-      <p>${reservation.check_out_date}</p>
-      <p>${reservation.total_price}</p>
-      <p>${reservation.status}</p>
-      <button class="btn  p-2" 
-        onclick="deleteReservation(${reservation.id})">
-        <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
-      </button>
+          <tr>
+            <td>${reservation.property_id}</td>
+            <td>${reservation.check_in_date}</td>
+            <td>${reservation.check_out_date}</td>
+            <td>${reservation.total_price}</td>
+            <td>${reservation.status}</td>
+            <td>
+              <button class="btn p-2" onclick="deleteReservation(${reservation.id})">
+                <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
+              </button>
+            </td>
+          </tr>
     `;
 
     // Agregar la card al contenedor de favoritos
