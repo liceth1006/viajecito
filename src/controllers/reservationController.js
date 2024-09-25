@@ -42,7 +42,7 @@ export const postReservation = async (req, res) => {
 
     // Guardar el usuario en la base de datos
     const [result] = await pool.query(
-      "INSERT INTO reservation (user_id, property_id, check_in_date, check_out_date, total_price) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO reservation (user_id, property_id, check_in_date, check_out_date, total_price) VALUES (?, ?, ?, ?, ((DATEDIFF(check_out_date, check_in_date))*?))",
       [newReservation.user_id, newReservation.property_id, newReservation.check_in_date, newReservation.check_out_date, newReservation.total_price]
     );
 

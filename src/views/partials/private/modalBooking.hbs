@@ -1,0 +1,43 @@
+  
+  <!-- Modal -->
+  <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reservationModalLabel">Reservas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="reservationForm" onsubmit="registerReservation(event)">
+            <p id="">Nombre: {{details.name}}</p>
+            <p>{{composite_price_breakdown.all_inclusive_amount.amount_rounded}}</p>
+            <input type="hidden" id="property_id" value="{{details.hotel_id}}"/>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="check_in_date" class="form-label">Fecha de Llegada</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="check_in_date"
+                  name="check_in_date"
+                  required/>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="check_out_date" class="form-label">Fecha de Salida</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="check_out_date"
+                  name="check_out_date"
+                  required/>
+              </div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Reservar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

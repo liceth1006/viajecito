@@ -244,13 +244,14 @@ async function registerReservation(event) {
   event.preventDefault();
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
+  const tPrecio = localStorage.getItem("precio");
 
   const formData = {
     user_id: user,
     property_id: document.getElementById("property_id").value,
     check_in_date: document.getElementById("check_in_date").value,
     check_out_date: document.getElementById("check_out_date").value,
-    total_price: 80000,
+    total_price: tPrecio,
   };
   try {
     const response = await fetch("/reservation", {
@@ -458,16 +459,20 @@ async function checkFavorite(hotelId) {
 }
 
 //funcion boton detalles
-function viewHotel(hotelId) {
+function viewHotel(hotelId, price) {
   // Obtener la ruta actual
   const currentPath = window.location.pathname;
+  localStorage.removeItem("precio");
 
   // Cambia la redirección según la ruta actual
   let url;
   if (currentPath === "/hotelpublic") {
-    url = `/hotelDetails/${hotelId}`; 
+    url = `/hotelDetails/${hotelId}`;
+    console.log(price); 
+    // localStorage.setItem("precio", price);
   } else if (currentPath === "/hotelprivate") {
     url = `/hotelDetailsPrivate/${hotelId}`; 
+    localStorage.setItem("precio", price);
   } else {
     url = `/hotelDetails/${hotelId}`; 
   }
@@ -819,14 +824,6 @@ function favoriteHeartAttractiones () {
 };
 
 
-
-
-
-
-
-
-
-
 // Llama a las funciones al cargar el documento
 document.addEventListener("DOMContentLoaded", () => {
   updateUserInfo();
@@ -862,7 +859,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Guarda el dest_id y destName en el almacenamiento local
       localStorage.setItem("dest_id", destId);
       localStorage.setItem("name", destName);
-      
+      localStorage.setItem("precio", price);
       // Llama a la función para redirigir con el ID del destino
       getCurrentPathAndRedirect(destId);
     });
