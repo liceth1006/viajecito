@@ -279,6 +279,109 @@ async function registerReservation(event) {
   }
 }
 
+async function getReservation() {
+  console.log("Obteniendo Reservas...");
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await fetch("/reservationShow", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      renderReservation(data); 
+    } else {
+      console.error("Error al obtener las reservas:", data.error);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+function renderReservation(reservations) {
+  const reservationContainer = document.getElementById("reservationContainer");
+
+  if (!reservationContainer) {
+    console.error("El contenedor de favoritos no existe en el DOM.");
+    return;
+  }
+
+  reservationContainer.innerHTML = "";
+  reservations.forEach((reservation) => {
+    const reservationItem = document.createElement("div");
+    reservationItem.classList.add("col");
+    reservationItem.innerHTML = `
+      <p>${reservation.property_id}</p>
+      <p>${reservation.check_in_date}</p>
+      <p>${reservation.check_out_date}</p>
+      <p>${reservation.total_price}</p>
+      <p>${reservation.status}</p>
+      <button class="btn  p-2" 
+        onclick="deleteReservation(${reservation.id})">
+        <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
+      </button>
+    `;
+
+    // Agregar la card al contenedor de favoritos
+    reservationContainer.appendChild(reservationItem);
+  });
+}
+
+async function deleteReservation(id) {
+  const confirmDelete = await Swal.fire({
+    title: "¿Estás seguro?",
+    text: "Esta acción eliminará este favorito permanentemente.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+  });
+
+  if (!confirmDelete.isConfirmed) return; // Solo proceder si el usuario confirma
+
+  try {
+    const response = await fetch(`/deleteReservation/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      await Swal.fire({
+        icon: "success",
+        title: "Favorito eliminado",
+        text: "El favorito ha sido eliminado exitosamente.",
+        confirmButtonText: "Aceptar",
+      });
+      location.reload();
+    } else {
+      const errorData = await response.json();
+      Swal.fire({
+        icon: "error",
+        title: "Error al eliminar",
+        text: `Ocurrió un error: ${errorData.message}`,
+        confirmButtonText: "Aceptar",
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: "Error al intentar eliminar el favorito. Inténtalo de nuevo más tarde.",
+      confirmButtonText: "Aceptar",
+    });
+  }
+}
+
 // Función para guardar favorito
 async function postFavorite(
   hotelId,
@@ -696,6 +799,7 @@ function favoriteHeartAttractiones () {
 document.addEventListener("DOMContentLoaded", () => {
   updateUserInfo();
   getFavorites();
+  getReservation();
   searchDestination();
   handleSortForm("sortForm","orderBy")
   handleSortForm("sorAtttactionsForm","orderAtttactionsBy")

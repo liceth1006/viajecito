@@ -1,7 +1,7 @@
 import pool from "../database/database.js";
 
 //Funcion obtener reservas
-export const getReservation = async (req, resizeBy) => {
+export const getReservation = async (req, res) => {
   const userID = req.user_id;
 
   try {
@@ -15,7 +15,7 @@ export const getReservation = async (req, resizeBy) => {
       return res.status(404).json({ error: "No se encontraron reservas 😰" });
     }
 
-    res.json(favorites);
+    res.json(reservations);
   } catch (error) {
     console.error("Error al obtener las reservas", error);
     return res.status(500).json({ error: "Error del servidor" });
