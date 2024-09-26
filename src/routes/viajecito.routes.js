@@ -87,6 +87,15 @@ router.get("/profilePage", (req, res) => {
   }
 });
 
+router.get("/bookingPrivate", (req, res) => {
+  try {
+    res.render('private/bookingPrivate' , { layout: 'privateLayout' }); 
+  } catch (error) {
+    console.error("Error en la ruta protegida:", error);
+    res.status(500).send("Error interno del servidor");
+  }
+});
+
 router.get("/profile", requireToken, profile);
 router.get("/favoriteShow",requireToken, getFavorite);
 router.post("/favoritePrivate", requireToken, postFavorite);
