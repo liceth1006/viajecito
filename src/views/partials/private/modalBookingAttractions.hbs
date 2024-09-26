@@ -8,10 +8,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="reservationForm" onsubmit="registerReservation(event)">
+          <form id="reservationForm" onsubmit="registerReservationAttractions(event)">
             <p id="">Nombre: {{details.name}}</p>
-            <p>{{composite_price_breakdown.all_inclusive_amount.amount_rounded}}</p>
-            <input type="hidden" id="property_id" value="{{details.hotel_id}}"/>
+            <input type="hidden" id="total_price" value="Atraccion: {{details.representativePrice.publicAmount}}"/>
+            <input type="hidden" id="property_id" value="Atraccion: {{details.name}}"/>
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label for="check_in_date" class="form-label">Fecha de Llegada</label>
@@ -29,7 +29,7 @@
                   class="form-control"
                   id="check_out_date"
                   name="check_out_date"
-                  required/>
+                  required disabled/>
               </div>
             </div>
             <div class="d-grid">
@@ -41,3 +41,11 @@
     </div>
   </div>
 </div>
+<script>
+  document.getElementById('check_in_date').addEventListener('change', function() {
+    const startDate = new Date(this.value);
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 1);
+    document.getElementById('check_out_date').value = endDate.toISOString().split('T')[0];
+  });
+</script>

@@ -1,0 +1,64 @@
+  
+  <!-- Modal -->
+  <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reservationModalLabel">Reservas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="reservationForm" onsubmit="registerReservationHotel(event)">
+            <p id="">Nombre: {{details.name}}</p>
+            <input type="hidden" id="property_id" value="Alojamiento: {{details.name}}"/>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="check_in_date" class="form-label">Fecha de Llegada</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="check_in_date"
+                  name="check_in_date"
+                  required/>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label for="check_out_date" class="form-label">Fecha de Salida</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="check_out_date"
+                  name="check_out_date"
+                  required/>
+              </div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Reservar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.getElementById('check_in_date').addEventListener('change', function() {
+    var inputDate = new Date(this.value);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Eliminar la hora para comparar solo la fecha
+
+    if (inputDate < today) {
+        alert('La fecha no puede ser menor o igual a la fecha de hoy.');
+        this.value = ''; // Limpiar el campo si la fecha es inválida
+    }
+});
+
+document.getElementById('check_out_date').addEventListener('change', function() {
+    var startDate = new Date(document.getElementById('check_in_date').value);
+    var endDate = new Date(this.value);
+
+    if (endDate <= startDate) {
+        alert('La fecha final debe ser mayor a la fecha inicial.');
+        this.value = '';
+    }
+  });
+</script>

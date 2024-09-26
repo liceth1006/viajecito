@@ -240,7 +240,46 @@ function searchHotel() {
   }
 }
 
-async function registerReservation(event) {
+async function registerReservationAttractions(event) {
+  event.preventDefault();
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
+
+  const formData = {
+    user_id: user,
+    property_id: document.getElementById("property_id").value,
+    check_in_date: document.getElementById("check_in_date").value,
+    check_out_date: document.getElementById("check_out_date").value,
+    total_price: document.getElementById("total_price").value,
+  };
+  try {
+    const response = await fetch("/reservation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alertSweet("success", "Registro exitoso", data.message);
+      document.getElementById("reservationForm").reset();
+    } else {
+      alertSweet("error", "Oops...", data.error);
+    }
+  } catch (error) {
+    alertSweet(
+      "error",
+      "Error",
+      "Error al registrar el usuario. Inténtalo de nuevo."
+    );
+  }
+}
+
+async function registerReservationHotel(event) {
   event.preventDefault();
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
@@ -317,18 +356,26 @@ function renderReservation(reservations) {
   reservations.forEach((reservation) => {
     const reservationItem = document.createElement("tr");
     reservationItem.innerHTML = `
-          <tr>
-            <td>${reservation.property_id}</td>
-            <td>${reservation.check_in_date}</td>
-            <td>${reservation.check_out_date}</td>
-            <td>${reservation.total_price}</td>
-            <td>${reservation.status}</td>
-            <td>
-              <button class="btn p-2" onclick="deleteReservation(${reservation.id})">
+      <div class="card mb-3 h-100" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-12">
+            <div class="card-body">
+              <h5 class="card-title">${reservation.property_id}</h5>
+              <div class="row">
+                <p><i class="fa-solid fa-calendar text-success"></i> Fecha de Llegada: ${reservation.check_in_date}</p>
+                <p><i class="fa-solid fa-calendar text-success"></i> Fecha de Salida: ${reservation.check_out_date}</p>
+                <p><i class="fa-solid fa-hourglass-start text-primary"></i> ${reservation.status}</p>
+              </div>
+              <h5>Precio Total: ${reservation.total_price}</h5>
+            </div>
+           <div class="position-absolute top-0 end-0 ">
+              <button class="btn  p-2" onclick="deleteReservation(${reservation.id})">
                 <i class="fa-solid fa-trash-can fs-3 text-danger"></i>
               </button>
-            </td>
-          </tr>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     // Agregar la card al contenedor de favoritos
@@ -339,7 +386,7 @@ function renderReservation(reservations) {
 async function deleteReservation(id) {
   const confirmDelete = await Swal.fire({
     title: "¿Estás seguro?",
-    text: "Esta acción eliminará este favorito permanentemente.",
+    text: "Esta acción eliminará esta reserva permanentemente.",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -361,8 +408,8 @@ async function deleteReservation(id) {
     if (response.ok) {
       await Swal.fire({
         icon: "success",
-        title: "Favorito eliminado",
-        text: "El favorito ha sido eliminado exitosamente.",
+        title: "Reserva eliminada",
+        text: "La reserva ha sido eliminado exitosamente.",
         confirmButtonText: "Aceptar",
       });
       location.reload();
@@ -379,7 +426,7 @@ async function deleteReservation(id) {
     Swal.fire({
       icon: "error",
       title: "Error inesperado",
-      text: "Error al intentar eliminar el favorito. Inténtalo de nuevo más tarde.",
+      text: "Error al intentar eliminar la reserva. Inténtalo de nuevo más tarde.",
       confirmButtonText: "Aceptar",
     });
   }
